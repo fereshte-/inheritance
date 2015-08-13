@@ -1,0 +1,57 @@
+(
+(singleton e e)
+(filter e e e e e)
+(filter e e e)
+(countComparative e e e e e)
+(countComparative e e e e e e)
+
+(countSuperlative e e e e )
+(countSuperlative e e e e e)
+
+(getProperty e e e)
+(superlative e e e e)
+(ensureNumericProperty e e)
+(ensureNumericEntity e e)
+(listValue e e)
+(string e e)
+(aggregate e e e)
+(reverse e e)
+
+(concat e e e)
+
+(ccount e i)
+(avg i i)
+(number i i)
+(number i e i)
+(date i i i da)
+(var e e)
+(time i i ti)
+(sum i i)
+
+
+(max e i e)
+(min e i e)
+(< i i obj)
+(= e e obj)
+(> i i obj)
+(>= i i obj)
+(<= i i obj)
+(!= e e obj)
+
+(is_important me me) 
+(type ty obj)
+(start_time me i)
+(start_time_2 i me)
+(end_time_2 i me)
+(end_time me i)
+
+(attendee me pe)
+(attendee_2 pe me)
+
+(location me lo)
+(location_2 lo me)
+(length me i)
+(length_2 i me)
+(date me da)
+(date_2 da me)
+)

@@ -1,0 +1,57 @@
+what is alices end date
+(call:e listValue (call:e getProperty (call:e getProperty en.person.alice (call:e reverse (string:e student))) (string:e education_end_date)))
+
+end date of student alice
+(call:e listValue (call:e getProperty (call:e getProperty en.person.alice (call:e reverse (string:e student))) (string:e education_end_date)))
+
+when did alice finish school
+(call:e listValue (call:e getProperty (call:e getProperty en.person.alice (call:e reverse (string:e student))) (string:e education_end_date)))
+
+end date of student alice
+(call:e listValue (call:e getProperty (call:e getProperty en.person.alice (call:e reverse (string:e student))) (string:e education_end_date)))
+
+who has over two relationship status
+(call:e listValue (call:e countComparative (call:e getProperty (call:e singleton en.person) (string:e !type)) (string:e relationship_status) (string:e >) (number:i 2)))
+
+person that has more than two relationship status
+(call:e listValue (call:e countComparative (call:e getProperty (call:e singleton en.person) (string:e !type)) (string:e relationship_status) (string:e >) (number:i 2)))
+
+what employee has an end date that is not in 2004
+(call:e listValue (call:e getProperty ((lambda:e s (call:e filter (var s) (string:e employment_end_date) (string:e !=) (date:i 2004 -1 -1))) (call:e domain (string:e employee))) (string:e employee)))
+
+employee whose end date is not 2004
+(call:e listValue (call:e getProperty ((lambda:e s (call:e filter (var s) (string:e employment_end_date) (string:e !=) (date:i 2004 -1 -1))) (call:e domain (string:e employee))) (string:e employee)))
+
+what is the average height of a person
+(call:e listValue (call:e aggregate (string:e avg) (call:e getProperty (call:e getProperty (call:e singleton en.person) (string:e !type)) (string:e height))))
+
+average height of person
+(call:e listValue (call:e aggregate (string:e avg) (call:e getProperty (call:e getProperty (call:e singleton en.person) (string:e !type)) (string:e height))))
+
+who is the tallest person
+(call:e listValue (call:e superlative (call:e getProperty (call:e singleton en.person) (string:e !type)) (string:e max) (call:e ensureNumericProperty (string:e height))))
+
+person that has the largest height
+(call:e listValue (call:e superlative (call:e getProperty (call:e singleton en.person) (string:e !type)) (string:e max) (call:e ensureNumericProperty (string:e height))))
+
+who are all of alices guy friends
+(call:e listValue (call:e filter (call:e filter (call:e getProperty (call:e singleton en.person) (string:e !type)) (string:e friend) (string:e =) en.person.alice) (string:e gender) (string:e =) en.gender.male))
+
+person that is friends with alice and whose gender is male
+(call:e listValue (call:e filter (call:e filter (call:e getProperty (call:e singleton en.person) (string:e !type)) (string:e friend) (string:e =) en.person.alice) (string:e gender) (string:e =) en.gender.male))
+
+male 180 cm tall
+(call:e listValue (call:e filter (call:e filter (call:e getProperty (call:e singleton en.person) (string:e !type)) (string:e height) (string:e =) (number:i 180 en.cm)) (string:e gender) (string:e =) en.gender.male))
+
+person whose height is 180 cm and whose gender is male
+(call:e listValue (call:e filter (call:e filter (call:e getProperty (call:e singleton en.person) (string:e !type)) (string:e height) (string:e =) (number:i 180 en.cm)) (string:e gender) (string:e =) en.gender.male))
+
+what is job title of alice whose employment end date is in 2004
+(call:e listValue (call:e getProperty (call:e filter (call:e getProperty en.person.alice (call:e reverse (string:e employee))) (string:e employment_end_date) (string:e =) (date:i 2004 -1 -1)) (string:e job_title)))
+
+job title of employee alice whose end date is 2004
+(call:e listValue (call:e getProperty (call:e filter (call:e getProperty en.person.alice (call:e reverse (string:e employee))) (string:e employment_end_date) (string:e =) (date:i 2004 -1 -1)) (string:e job_title)))
+
+males born in 2004
+(call:e listValue (call:e filter (call:e filter (call:e getProperty (call:e singleton en.person) (string:e !type)) (string:e birthdate) (string:e =) (date:i 2004 -1 -1)) (string:e gender) (string:e =) en.gender.male))
+
