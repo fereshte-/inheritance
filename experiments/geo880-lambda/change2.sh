@@ -56,7 +56,7 @@ echo `cp fereshte.actual.ti.final data/geo600.dev.giza_probs`;
 
 echo "probs is computed and now we want to run runtest.pl \:D/";
 
-set classpath="../../src:.:/Users/fereshte/Desktop/courses/research/guava-18.0.jar";
+set classpath="../../src:.:../../lib/guava-18.0.jar";
 
 echo "javac -classpath $classpath ../../src/*/*.java TestTrain.java";
 echo `javac -classpath $classpath ../../src/*/*.java TestTrain.java`;
