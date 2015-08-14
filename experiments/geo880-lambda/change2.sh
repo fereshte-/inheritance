@@ -1,5 +1,6 @@
 #! /bin/csh
 
+
 echo `rm run.test`;
 
 set p = 5;
