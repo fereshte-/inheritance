@@ -224,6 +224,12 @@ public class Lit extends Exp {
 		return result.toString();
 	}
 
+	private String reverse(String s){
+		if(s.contains("_2"))
+			return s.replace("_2", "");
+		else
+			return s+"_2";
+	}
 
 	@Override
 	public String change(List varNames){
@@ -250,14 +256,25 @@ public class Lit extends Exp {
 			result.append(args[0].change(varNames)+"_2");
 		}else if(name.equals("filter")){
 			if (args.length == 4){
-				result.append("(").append(args[2].change(varNames));
-				result.append(" (").append(args[1].change(varNames));
-				result.append(" ").append(args[0].change(varNames));
-				result.append(")");
+				System.out.println("!!!!!!!!!!!!!!!!!!!"+args[2] + "!!!!!!!!"+args[2].change(varNames));
+				if(args[2].change(varNames).trim().equals("=")){
+					result.append("(and ");
+					result.append(args[0].change(varNames));
+					result.append(" (").append(reverse(args[1].change(varNames)));
+					result.append(" ").append(args[3].change(varNames));
+					result.append(")");
+					
+					result.append(")");
+				}else{
+					result.append("(").append(args[2].change(varNames));
+					result.append(" (").append(args[1].change(varNames));
+					result.append(" ").append(args[0].change(varNames));
+					result.append(")");
 
-				result.append(" ").append(args[3].change(varNames));
+					result.append(" ").append(args[3].change(varNames));
 
-				result.append(")");
+					result.append(")");
+				}
 			}else if(args.length == 2){
 				result.append(" (").append(args[1].change(varNames));
 				result.append(" ").append(args[0].change(varNames));

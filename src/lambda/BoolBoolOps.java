@@ -1,19 +1,19 @@
 /***************************  LICENSE  *******************************
-* This file is part of UBL.
-* 
-* UBL is free software: you can redistribute it and/or modify
-* it under the terms of the GNU Lesser General Public License as 
-* published by the Free Software Foundation, either version 3 of the 
-* License, or (at your option) any later version.
-* 
-* UBL is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU Lesser General Public License for more details.
-*
-* You should have received a copy of the GNU Lesser General Public 
-* License along with UBL.  If not, see <http://www.gnu.org/licenses/>.
-***********************************************************************/
+ * This file is part of UBL.
+ * 
+ * UBL is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the 
+ * License, or (at your option) any later version.
+ * 
+ * UBL is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public 
+ * License along with UBL.  If not, see <http://www.gnu.org/licenses/>.
+ ***********************************************************************/
 
 
 
@@ -21,8 +21,11 @@
 package lambda;
 
 import java.util.*;
+
 import utils.*;
+
 import java.io.*;
+
 import parser.*;
 
 /*
@@ -38,8 +41,14 @@ public class BoolBoolOps extends Exp {
 	private BoolBoolOps(int type, Set<Exp> entries){
 		op_type=type;
 		exps = new LinkedList();
-		for (Exp e : entries)
+		for (Exp e : entries){
 			exps.add(e);
+			if(rtype == null)
+				rtype = e.type();
+			else
+				rtype.commonSuperType(e.type());
+		}
+
 	}
 
 	public BoolBoolOps(String input,Map vars){
@@ -57,8 +66,12 @@ public class BoolBoolOps extends Exp {
 			System.exit(-1);
 		}
 		while (lr.hasNext()){
-			exps.add(Exp.makeExp(lr.next(),vars));
-		}
+			Exp e = Exp.makeExp(lr.next(),vars);
+			exps.add(e);
+			if(rtype == null)
+				rtype = e.type();
+			else
+				rtype.commonSuperType(e.type());		}
 	}
 
 	static public BoolBoolOps makeConj(Exp one, Exp two){
@@ -66,6 +79,7 @@ public class BoolBoolOps extends Exp {
 		result.op_type = CONJ;
 		result.exps.add(one);
 		result.exps.add(two);
+		result.rtype = one.type().commonSuperType(two.type());
 		return result;
 	}
 
@@ -73,6 +87,8 @@ public class BoolBoolOps extends Exp {
 		BoolBoolOps result = new BoolBoolOps();
 		result.op_type = CONJ;
 		result.exps.add(one);
+		result.rtype = one.type();
+
 		return result;
 	}
 
@@ -81,6 +97,7 @@ public class BoolBoolOps extends Exp {
 		result.op_type = DISJ;
 		result.exps.add(one);
 		result.exps.add(two);
+		result.rtype = one.type().commonSuperType(two.type());
 		return result;
 	}
 
@@ -89,14 +106,23 @@ public class BoolBoolOps extends Exp {
 		result.op_type = type;
 		result.exps.add(one);
 		result.exps.add(two);
+		result.rtype = one.type().commonSuperType(two.type());
 		return result;
 	}
 
 	public Exp simplify(List<Var> vars){
 		removeTrues();
+		List exps2 = new LinkedList();
 		for (int i=0; i<exps.size(); i++){
 			exps.set(i,((Exp)exps.get(i)).simplify(vars));
+			if(exps.get(i) instanceof BoolBoolOps){
+				BoolBoolOps e= (BoolBoolOps) exps.get(i);
+				exps2.addAll(e.exps);
+			}else
+				exps2.add(exps.get(i));
+			
 		}
+		exps = exps2;
 		removeDuplicates();
 		if (exps.size()==1) return exps.get(0);
 		return this;
@@ -114,6 +140,7 @@ public class BoolBoolOps extends Exp {
 					exps.containsAll(other.exps)){
 				exps.removeAll(other.exps);
 				exps.add(newe);
+				
 			}
 		}
 
@@ -353,9 +380,9 @@ public class BoolBoolOps extends Exp {
 		if (o instanceof BoolBoolOps){
 			BoolBoolOps c = (BoolBoolOps)o;
 			return op_type==c.op_type 
-			&& exps.size()==c.exps.size()
-			&& exps.containsAll(c.exps) 
-			&& c.exps.containsAll(exps);
+					&& exps.size()==c.exps.size()
+					&& exps.containsAll(c.exps) 
+					&& c.exps.containsAll(exps);
 		}
 		return false;
 	}
@@ -364,41 +391,99 @@ public class BoolBoolOps extends Exp {
 		if (o instanceof BoolBoolOps){
 			BoolBoolOps c = (BoolBoolOps)o;
 			return op_type==c.op_type 
-			&& exps.size()==c.exps.size()
-			&& exps.containsAll(c.exps) 
-			&& c.exps.containsAll(exps);
+					&& exps.size()==c.exps.size()
+					&& exps.containsAll(c.exps) 
+					&& c.exps.containsAll(exps);
 		}
 		return false;
 	}
 
 	public Type type(){
-		return PType.T;
+		return PType.E;
 	}
 
+//	public Type inferType(List<Var> vars, List<List<Type>> varTypes){
+//		if (op_type==DISJ) return PType.T;
+//		for (Exp e : exps){
+//			Type t=e.inferType(vars,varTypes);
+//			if (t==null || !t.subType(PType.T)){
+//				inferedType=null; // update cache
+//				return null;
+//			}
+//		}
+//		inferedType=PType.T; // update cache
+//		return PType.T; // could we infer subtypes here?
+//	}
+	
 	public Type inferType(List<Var> vars, List<List<Type>> varTypes){
-		if (op_type==DISJ) return PType.T;
-		for (Exp e : exps){
-			Type t=e.inferType(vars,varTypes);
-			if (t==null || !t.subType(PType.T)){
-				inferedType=null; // update cache
-				return null;
+//		if (op_type==DISJ) return PType.T;
+//		for (Exp e : exps){
+//			Type t=e.inferType(vars,varTypes);
+//			if (t==null || !t.subType(PType.T)){
+//				inferedType=null; // update cache
+//				return null;
+//			}
+//		}
+//		inferedType=PType.T; // update cache
+//		return PType.T; // could we infer subtypes here?
+		
+		Iterator i = exps.iterator();
+		Exp e;
+		Exp prev = null;
+		inferedType = null;
+		while (i.hasNext()){
+			e = (Exp)i.next();
+			if(prev != null){
+				Type t1=e.inferType(vars,varTypes);
+				Type t2=prev.inferType(vars,varTypes);
+				if (t1==null || t2==null || !t1.matches(t2)){
+					inferedType=null; // update cache
+					return null;
+				}
 			}
+			inferedType = e.inferedType;
+			prev = e;
 		}
-		inferedType=PType.T; // update cache
-		return PType.T; // could we infer subtypes here?
+		return inferedType;
 	}
+
+	//	public boolean wellTyped(){
+	//		Iterator i = exps.iterator();
+	//		Exp e;
+	//		Exp prev;
+	//		while (i.hasNext()){
+	//			e = (Exp)i.next();
+	//			if (e==null || !e.wellTyped()){
+	//				return false;
+	//			}
+	//			if (!PType.T.equals(e.type())){
+	//				return false;
+	//			}
+	//		}
+	//		return true;
+	//	}
 
 	public boolean wellTyped(){
 		Iterator i = exps.iterator();
 		Exp e;
+		Exp prev = null;
 		while (i.hasNext()){
 			e = (Exp)i.next();
 			if (e==null || !e.wellTyped()){
 				return false;
 			}
-			if (!PType.T.equals(e.type())){
-				return false;
+			if(prev != null){
+				if (e instanceof Var && !((Var)e).updateTempType(prev.type())){
+					return false;
+				}
+				if (prev instanceof Var && !((Var)prev).updateTempType(e.type())){
+					return false;
+				}
+				if (!e.type().matches(prev.type())){
+					return false;
+				}
 			}
+			prev = e;
 		}
 		return true;
 	}
@@ -727,6 +812,7 @@ public class BoolBoolOps extends Exp {
 	}
 
 	List<Exp> exps;
+	Type rtype;
 	int op_type;
 
 	public static int CONJ = 0;

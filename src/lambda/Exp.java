@@ -91,10 +91,10 @@ public abstract class Exp {
 //				input.startsWith("(argmin "))
 //			return new ArgM(input,vars);
 //
-//		if (input.startsWith("(implies ")||
-//				input.startsWith("(or ")||
-//				input.startsWith("(and "))
-//			return new BoolBoolOps(input,vars);
+		if (input.startsWith("(implies ")||
+				input.startsWith("(or ")||
+				input.startsWith("(and "))
+			return new BoolBoolOps(input,vars);
 //
 //		if (input.startsWith("(not "))
 //			return new Not(input,vars);
