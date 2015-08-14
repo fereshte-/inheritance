@@ -38,7 +38,6 @@ public class Const extends Exp{
 				t = new PType("e");//null;
 			name = n;
 		} else {
-			System.err.println("I'm here!!!!!" + n + "========" + n.substring(colon+1,n.length()));
 			name = n.substring(0,colon);
 			t = new PType(n.substring(colon+1,n.length()));
 		}
