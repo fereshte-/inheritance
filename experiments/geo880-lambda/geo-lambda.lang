@@ -21,6 +21,8 @@
 (concat me me me)
 (concat pe pe pe)
 (concat lo lo lo)
+(concat i i i)
+
 
 
 (ccount e i)
@@ -43,10 +45,14 @@
 (!= me me obj)
 (!= lo lo obj)
 (!= pe pe obj)
+(!= i i obj)
+
 
 (= me me obj)
 (= lo lo obj)
 (= pe pe obj)
+(= i i obj)
+
 
 
 
@@ -56,10 +62,10 @@
 (type pe pe)
 (type ho ho)
 
-(start_time me i)
-(start_time_2 i me)
-(end_time_2 i me)
-(end_time me i)
+(start_time me ti)
+(start_time_2 ti me)
+(end_time_2 ti me)
+(end_time me ti)
 
 (attendee me pe)
 (attendee_2 pe me)
