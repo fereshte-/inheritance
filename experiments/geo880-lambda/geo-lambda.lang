@@ -17,7 +17,11 @@
 (aggregate e e e)
 (reverse e e)
 
-(concat e e e)
+
+(concat me me me)
+(concat pe pe pe)
+(concat lo lo lo)
+
 
 (ccount e i)
 (avg i i)
@@ -32,14 +36,26 @@
 (max e i e)
 (min e i e)
 (< i i obj)
-(= e e obj)
 (> i i obj)
 (>= i i obj)
 (<= i i obj)
-(!= e e obj)
+
+(!= me me obj)
+(!= lo lo obj)
+(!= pe pe obj)
+
+(= me me obj)
+(= lo lo obj)
+(= pe pe obj)
+
+
 
 (is_important me me) 
-(type ty obj)
+(type lo lo)
+(type me me)
+(type pe pe)
+(type ho ho)
+
 (start_time me i)
 (start_time_2 i me)
 (end_time_2 i me)

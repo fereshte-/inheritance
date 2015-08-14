@@ -76,6 +76,18 @@ public class Lang {
 		}
 		return ret;
 	}
+	
+	public static List predsWithName(String name){
+		List ret = new LinkedList();
+		Iterator i = preds.iterator();
+		while (i.hasNext()){
+			Pred p = (Pred)i.next();
+			if (p.name.equals(name)){
+				ret.add(p);
+			}
+		}
+		return ret;
+	}
 	public static List allPreds(){
 		return preds;
 	}

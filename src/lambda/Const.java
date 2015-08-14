@@ -28,9 +28,17 @@ public class Const extends Exp{
 		int colon = n.indexOf(':');
 		if (colon==-1){
 			//System.err.println("WARNING: null type const "+n); 
-			t = new PType("e");//null;
+			if(Lang.hasPred(name)){
+				List<Pred> l = Lang.predsWithName(name);
+				if(l.size() == 1)
+					t = l.get(0).type();
+				else
+					t=new PType("e");
+			}else
+				t = new PType("e");//null;
 			name = n;
 		} else {
+			System.err.println("I'm here!!!!!" + n + "========" + n.substring(colon+1,n.length()));
 			name = n.substring(0,colon);
 			t = new PType(n.substring(colon+1,n.length()));
 		}
@@ -67,7 +75,10 @@ public class Const extends Exp{
 	
 	@Override
 	public String change(List varNames){
+		if(!t.toString().equals("e"))
+			return name+":"+t;
 		return name;
+
 	}
 
 	public String toSlotsString(boolean outer){

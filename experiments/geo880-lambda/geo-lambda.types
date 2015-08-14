@@ -2,6 +2,7 @@
 obj
 (da i)
 (ti i)
+(ho i)
 
 (me obj)  //meeting
 (pe obj) //person
