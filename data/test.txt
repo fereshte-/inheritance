@@ -1,1008 +1,504 @@
 which meetings end later than 10 in the morning or 3 in the afternoon
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string >) (ensureNumericEntity (concat (time 10 0) (time 15 0)))))
 
-meeting whose end time is larger than 10am or 3pm
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string >) (ensureNumericEntity (concat (time 10 0) (time 15 0)))))
-
 important meeting with three hour duration
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string is_important)) (string length) (string =) (number 3 hour:ho)))
-
-meeting that is important and whose length is three hours
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string is_important)) (string length) (string =) (number 3 hour:ho)))
 
 meeting that has duration of lesser than three hour
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string length)) (string <) (ensureNumericEntity (number 3 hour:ho))))
 
-meeting whose length is smaller than three hours
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string length)) (string <) (ensureNumericEntity (number 3 hour:ho))))
-
 meetings that start earlier than or at the same time as the weekly standup meeting
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string start_time)) (string <=) (ensureNumericEntity (getProperty weekly_standup:me (string end_time)))))
-
-meeting whose start time is at most end time of weekly standup
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string start_time)) (string <=) (ensureNumericEntity (getProperty weekly_standup:me (string end_time)))))
 
 show me the meetings that are scheduled for longest length of time
 (listValue (superlative (getProperty (singleton meeting:me) (string type)) (string max) (ensureNumericProperty (string length))))
 
-meeting that has the largest length
-(listValue (superlative (getProperty (singleton meeting:me) (string type)) (string max) (ensureNumericProperty (string length))))
-
 what meeting is alice not attending
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (string attendee) (string !=) alice:pe))
-
-meeting whose attendee is not alice
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (string attendee) (string !=) alice:pe))
 
 which january 2nd meeting is three hours long
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string date) (string =) (date 2015 1 2)) (string length) (string =) (number 3 hour:ho)))
 
-meeting whose date is jan 2 and whose length is three hours
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string date) (string =) (date 2015 1 2)) (string length) (string =) (number 3 hour:ho)))
-
 who has attended the most meetings
-(listValue (countSuperlative (getProperty (singleton person:pe) (string type)) (string max) (reverse (string attendee)) (getProperty (singleton meeting:me) (string type))))
-
-person that is attendee of the most number of meeting
 (listValue (countSuperlative (getProperty (singleton person:pe) (string type)) (string max) (reverse (string attendee)) (getProperty (singleton meeting:me) (string type))))
 
 meeting is no later than january 2nd or 3rd
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string date)) (string >=) (ensureNumericEntity (concat (date 2015 1 2) (date 2015 1 3)))))
 
-meeting whose date is at least jan 2 or jan 3
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string date)) (string >=) (ensureNumericEntity (concat (date 2015 1 2) (date 2015 1 3)))))
-
 show me all three hour meetings that begin at 10am
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string length) (string =) (number 3 hour:ho)) (string start_time) (string =) (time 10 0)))
-
-meeting whose length is three hours and whose start time is 10am
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string length) (string =) (number 3 hour:ho)) (string start_time) (string =) (time 10 0)))
 
 meetings in greenberg cafe that start at 10am
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string start_time) (string =) (time 10 0)) (string location) (string =) greenberg_cafe:lo))
 
-meeting whose start time is 10am and whose location is greenberg cafe
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string start_time) (string =) (time 10 0)) (string location) (string =) greenberg_cafe:lo))
-
 show me meetings on jan 2
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string date) (string =) (date 2015 1 2)) (string date) (string =) (date 2015 1 2)))
-
-meeting whose date is jan 2 and whose date is jan 2
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string date) (string =) (date 2015 1 2)) (string date) (string =) (date 2015 1 2)))
 
 show me all meetings scheduled to be longer than the weekly standup meeting
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string length)) (string >) (ensureNumericEntity (getProperty weekly_standup:me (string length)))))
 
-meeting whose length is larger than length of weekly standup
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string length)) (string >) (ensureNumericEntity (getProperty weekly_standup:me (string length)))))
-
 meetings after january 2 or after january 3
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string date)) (string >) (ensureNumericEntity (concat (date 2015 1 2) (date 2015 1 3)))))
-
-meeting whose date is larger than jan 2 or jan 3
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string date)) (string >) (ensureNumericEntity (concat (date 2015 1 2) (date 2015 1 3)))))
 
 meeting which is on jan 3 or before
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string date)) (string <=) (ensureNumericEntity (concat (date 2015 1 2) (date 2015 1 3)))))
 
-meeting whose date is at most jan 2 or jan 3
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string date)) (string <=) (ensureNumericEntity (concat (date 2015 1 2) (date 2015 1 3)))))
-
 show me meetings shorter than three hours
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string length)) (string <=) (ensureNumericEntity (concat (number 3 hour:ho) (number 1 hour:ho)))))
-
-meeting whose length is at most three hours or one hour
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string length)) (string <=) (ensureNumericEntity (concat (number 3 hour:ho) (number 1 hour:ho)))))
 
 what meeting ends at 10am or earlier
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string <=) (ensureNumericEntity (time 10 0))))
 
-meeting whose end time is at most 10am
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string <=) (ensureNumericEntity (time 10 0))))
-
 show me all meetings marked important beginning at 10 am
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string is_important)) (string start_time) (string =) (time 10 0)))
-
-meeting that is important and whose start time is 10am
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string is_important)) (string start_time) (string =) (time 10 0)))
 
 what is the longest meeting
 (listValue (superlative (getProperty (singleton meeting:me) (string type)) (string max) (ensureNumericProperty (string length))))
 
-meeting that has the largest length
-(listValue (superlative (getProperty (singleton meeting:me) (string type)) (string max) (ensureNumericProperty (string length))))
-
 meetings that end at or before 10am or at or before 3pm
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string <=) (ensureNumericEntity (concat (time 10 0) (time 15 0)))))
-
-meeting whose end time is at most 10am or 3pm
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string <=) (ensureNumericEntity (concat (time 10 0) (time 15 0)))))
 
 meetings that start at the same time or after the weekly standup meeting ends
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string start_time)) (string >=) (ensureNumericEntity (getProperty weekly_standup:me (string end_time)))))
 
-meeting whose start time is at least end time of weekly standup
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string start_time)) (string >=) (ensureNumericEntity (getProperty weekly_standup:me (string end_time)))))
-
 what is the location of the weekly standup
-(listValue (filter (getProperty (singleton location:lo) (string type)) (reverse (string location)) (string =) weekly_standup:me))
-
-location that is location of weekly standup
 (listValue (filter (getProperty (singleton location:lo) (string type)) (reverse (string location)) (string =) weekly_standup:me))
 
 people that attend the weekly standup meeting or the annual review meeting
 (listValue (filter (getProperty (singleton person:pe) (string type)) (reverse (string attendee)) (string =) (concat weekly_standup:me annual_review:me)))
 
-person that is attendee of weekly standup or annual review
-(listValue (filter (getProperty (singleton person:pe) (string type)) (reverse (string attendee)) (string =) (concat weekly_standup:me annual_review:me)))
-
 what meeting has the longest length
-(listValue (superlative (getProperty (singleton meeting:me) (string type)) (string max) (ensureNumericProperty (string length))))
-
-meeting that has the largest length
 (listValue (superlative (getProperty (singleton meeting:me) (string type)) (string max) (ensureNumericProperty (string length))))
 
 what meetings are located at greenberg cafe
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string location) (string =) greenberg_cafe:lo) (string location) (string =) greenberg_cafe:lo))
 
-meeting whose location is greenberg cafe and whose location is greenberg cafe
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string location) (string =) greenberg_cafe:lo) (string location) (string =) greenberg_cafe:lo))
-
 meeting that starts when the weekly standup meeting ends
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (string start_time) (string =) (getProperty weekly_standup:me (string end_time))))
-
-meeting whose start time is end time of weekly standup
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (string start_time) (string =) (getProperty weekly_standup:me (string end_time))))
 
 meetings in greenberg cafe that end at 10am
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string location) (string =) greenberg_cafe:lo) (string end_time) (string =) (time 10 0)))
 
-meeting whose location is greenberg cafe and whose end time is 10am
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string location) (string =) greenberg_cafe:lo) (string end_time) (string =) (time 10 0)))
-
 show me all meetings happening on january 2nd
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string date) (string =) (date 2015 1 2)) (string date) (string =) (date 2015 1 2)))
-
-meeting whose date is jan 2 and whose date is jan 2
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string date) (string =) (date 2015 1 2)) (string date) (string =) (date 2015 1 2)))
 
 what meeting doesnt end at 10am
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (string end_time) (string !=) (time 10 0)))
 
-meeting whose end time is not 10am
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (string end_time) (string !=) (time 10 0)))
-
 show me all meeting that will end by 10am
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string <=) (ensureNumericEntity (time 10 0))))
-
-meeting whose end time is at most 10am
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string <=) (ensureNumericEntity (time 10 0))))
 
 meetings that start before 10am
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string start_time)) (string <) (ensureNumericEntity (time 10 0))))
 
-meeting whose start time is smaller than 10am
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string start_time)) (string <) (ensureNumericEntity (time 10 0))))
-
 meeting starts before end time of weekly standup
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string start_time)) (string <) (ensureNumericEntity (getProperty weekly_standup:me (string end_time)))))
-
-meeting whose start time is smaller than end time of weekly standup
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string start_time)) (string <) (ensureNumericEntity (getProperty weekly_standup:me (string end_time)))))
 
 three hour meeting on january 2nd
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string length) (string =) (number 3 hour:ho)) (string date) (string =) (date 2015 1 2)))
 
-meeting whose length is three hours and whose date is jan 2
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string length) (string =) (number 3 hour:ho)) (string date) (string =) (date 2015 1 2)))
-
 which people are attending meetings on january 2
-(listValue (filter (getProperty (singleton person:pe) (string type)) (reverse (string attendee)) (string =) (filter (getProperty (singleton meeting:me) (string type)) (string date) (string =) (date 2015 1 2))))
-
-person that is attendee of meeting whose date is jan 2
 (listValue (filter (getProperty (singleton person:pe) (string type)) (reverse (string attendee)) (string =) (filter (getProperty (singleton meeting:me) (string type)) (string date) (string =) (date 2015 1 2))))
 
 meetings that start at or after 10am
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string start_time)) (string >=) (ensureNumericEntity (time 10 0))))
 
-meeting whose start time is at least 10am
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string start_time)) (string >=) (ensureNumericEntity (time 10 0))))
-
 location of more than two meetings
-(listValue (countComparative (getProperty (singleton location:lo) (string type)) (reverse (string location)) (string >) (number 2) (getProperty (singleton meeting:me) (string type))))
-
-location that is location of more than two meeting
 (listValue (countComparative (getProperty (singleton location:lo) (string type)) (reverse (string location)) (string >) (number 2) (getProperty (singleton meeting:me) (string type))))
 
 show me all meetings in greenberg cafe on jan 2
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string date) (string =) (date 2015 1 2)) (string location) (string =) greenberg_cafe:lo))
 
-meeting whose date is jan 2 and whose location is greenberg cafe
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string date) (string =) (date 2015 1 2)) (string location) (string =) greenberg_cafe:lo))
-
 show me any meetings labeled as important which are also three hours long
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string is_important)) (string length) (string =) (number 3 hour:ho)))
-
-meeting that is important and whose length is three hours
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string is_important)) (string length) (string =) (number 3 hour:ho)))
 
 show me all locations which have meetings ending at 10 am
 (listValue (filter (getProperty (singleton location:lo) (string type)) (reverse (string location)) (string =) (filter (getProperty (singleton meeting:me) (string type)) (string end_time) (string =) (time 10 0))))
 
-location that is location of meeting whose end time is 10am
-(listValue (filter (getProperty (singleton location:lo) (string type)) (reverse (string location)) (string =) (filter (getProperty (singleton meeting:me) (string type)) (string end_time) (string =) (time 10 0))))
-
 show me the meeting that has the latest end time
-(listValue (superlative (getProperty (singleton meeting:me) (string type)) (string max) (ensureNumericProperty (string end_time))))
-
-meeting that has the largest end time
 (listValue (superlative (getProperty (singleton meeting:me) (string type)) (string max) (ensureNumericProperty (string end_time))))
 
 who is attending the 10sm meeting
 (listValue (filter (getProperty (singleton person:pe) (string type)) (reverse (string attendee)) (string =) (filter (getProperty (singleton meeting:me) (string type)) (string start_time) (string =) (time 10 0))))
 
-person that is attendee of meeting whose start time is 10am
-(listValue (filter (getProperty (singleton person:pe) (string type)) (reverse (string attendee)) (string =) (filter (getProperty (singleton meeting:me) (string type)) (string start_time) (string =) (time 10 0))))
-
 show me meetings ending after 10am
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string >) (ensureNumericEntity (time 10 0))))
-
-meeting whose end time is larger than 10am
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string >) (ensureNumericEntity (time 10 0))))
 
 show me all meetings attended by alice beginning at 10 am
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string attendee) (string =) alice:pe) (string start_time) (string =) (time 10 0)))
 
-meeting whose attendee is alice and whose start time is 10am
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string attendee) (string =) alice:pe) (string start_time) (string =) (time 10 0)))
-
 what meeting has and end time the same as weekly startup
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (string end_time) (string =) (getProperty weekly_standup:me (string end_time))))
-
-meeting whose end time is end time of weekly standup
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (string end_time) (string =) (getProperty weekly_standup:me (string end_time))))
 
 show me meetings that take three hours in greenberg cafe
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string length) (string =) (number 3 hour:ho)) (string location) (string =) greenberg_cafe:lo))
 
-meeting whose length is three hours and whose location is greenberg cafe
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string length) (string =) (number 3 hour:ho)) (string location) (string =) greenberg_cafe:lo))
-
 which meeting has the fewest attendees
-(listValue (countSuperlative (getProperty (singleton meeting:me) (string type)) (string min) (string attendee)))
-
-meeting that has the least number of attendee
 (listValue (countSuperlative (getProperty (singleton meeting:me) (string type)) (string min) (string attendee)))
 
 meeting ends before 10am or 3pm
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string <) (ensureNumericEntity (concat (time 10 0) (time 15 0)))))
 
-meeting whose end time is smaller than 10am or 3pm
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string <) (ensureNumericEntity (concat (time 10 0) (time 15 0)))))
-
 meeting which starts at 1000 am or 300 pm
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (string start_time) (string =) (concat (time 10 0) (time 15 0))))
-
-meeting whose start time is 10am or 3pm
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (string start_time) (string =) (concat (time 10 0) (time 15 0))))
 
 meetings attended by alice in greenberg cafe
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string location) (string =) greenberg_cafe:lo) (string attendee) (string =) alice:pe))
 
-meeting whose location is greenberg cafe and whose attendee is alice
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string location) (string =) greenberg_cafe:lo) (string attendee) (string =) alice:pe))
-
 show me meetings shorter than 3 hours
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string length)) (string <=) (ensureNumericEntity (number 3 hour:ho))))
-
-meeting whose length is at most three hours
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string length)) (string <=) (ensureNumericEntity (number 3 hour:ho))))
 
 what location is the three hour meeting
 (listValue (filter (getProperty (singleton location:lo) (string type)) (reverse (string location)) (string =) (filter (getProperty (singleton meeting:me) (string type)) (string length) (string =) (number 3 hour:ho))))
 
-location that is location of meeting whose length is three hours
-(listValue (filter (getProperty (singleton location:lo) (string type)) (reverse (string location)) (string =) (filter (getProperty (singleton meeting:me) (string type)) (string length) (string =) (number 3 hour:ho))))
-
 which january 2nd meetings is alice attenting
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string date) (string =) (date 2015 1 2)) (string attendee) (string =) alice:pe))
-
-meeting whose date is jan 2 and whose attendee is alice
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string date) (string =) (date 2015 1 2)) (string attendee) (string =) alice:pe))
 
 show me all meetings that begin at 10am
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (string start_time) (string =) (time 10 0)))
 
-meeting whose start time is 10am
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (string start_time) (string =) (time 10 0)))
-
 find the meeting with alice at greenberg cafe
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string attendee) (string =) alice:pe) (string location) (string =) greenberg_cafe:lo))
-
-meeting whose attendee is alice and whose location is greenberg cafe
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string attendee) (string =) alice:pe) (string location) (string =) greenberg_cafe:lo))
 
 what meeting has a date of jan 2 or jan 3
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string date)) (string >=) (ensureNumericEntity (concat (date 2015 1 2) (date 2015 1 3)))))
 
-meeting whose date is at least jan 2 or jan 3
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string date)) (string >=) (ensureNumericEntity (concat (date 2015 1 2) (date 2015 1 3)))))
-
 meeting ends at 10 am or 3 pm
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (string end_time) (string =) (concat (time 10 0) (time 15 0))))
-
-meeting whose end time is 10am or 3pm
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (string end_time) (string =) (concat (time 10 0) (time 15 0))))
 
 show me all meetings marked important which are also attended by alice
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string is_important)) (string attendee) (string =) alice:pe))
 
-meeting that is important and whose attendee is alice
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string is_important)) (string attendee) (string =) alice:pe))
-
 show me important meetings at greenberg cafe
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string location) (string =) greenberg_cafe:lo) (string is_important)))
-
-meeting whose location is greenberg cafe and that is important
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string location) (string =) greenberg_cafe:lo) (string is_important)))
 
 what is the end time of weekly standup
 (listValue (getProperty weekly_standup:me (string end_time)))
 
-end time of weekly standup
-(listValue (getProperty weekly_standup:me (string end_time)))
-
 meeting with no more than 2 locations
-(listValue (countComparative (getProperty (singleton meeting:me) (string type)) (string location) (string <=) (number 2)))
-
-meeting that has at most two location
 (listValue (countComparative (getProperty (singleton meeting:me) (string type)) (string location) (string <=) (number 2)))
 
 meeting which starts at or before 10 am
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string start_time)) (string <=) (ensureNumericEntity (time 10 0))))
 
-meeting whose start time is at most 10am
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string start_time)) (string <=) (ensureNumericEntity (time 10 0))))
-
 show me all meetings at greenberg cafe ending at 10 am
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string location) (string =) greenberg_cafe:lo) (string end_time) (string =) (time 10 0)))
-
-meeting whose location is greenberg cafe and whose end time is 10am
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string location) (string =) greenberg_cafe:lo) (string end_time) (string =) (time 10 0)))
 
 what meeting is at greenberg cafe
 (listValue (filter (getProperty (singleton location:lo) (string type)) (reverse (string location)) (string =) (filter (getProperty (singleton meeting:me) (string type)) (string location) (string =) greenberg_cafe:lo)))
 
-location that is location of meeting whose location is greenberg cafe
-(listValue (filter (getProperty (singleton location:lo) (string type)) (reverse (string location)) (string =) (filter (getProperty (singleton meeting:me) (string type)) (string location) (string =) greenberg_cafe:lo)))
-
 location is same as the location of meeting on jan 2
-(listValue (filter (getProperty (singleton location:lo) (string type)) (reverse (string location)) (string =) (filter (getProperty (singleton meeting:me) (string type)) (string date) (string =) (date 2015 1 2))))
-
-location that is location of meeting whose date is jan 2
 (listValue (filter (getProperty (singleton location:lo) (string type)) (reverse (string location)) (string =) (filter (getProperty (singleton meeting:me) (string type)) (string date) (string =) (date 2015 1 2))))
 
 what meetings are scheduled to run for three hours on jan 2
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string date) (string =) (date 2015 1 2)) (string length) (string =) (number 3 hour:ho)))
 
-meeting whose date is jan 2 and whose length is three hours
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string date) (string =) (date 2015 1 2)) (string length) (string =) (number 3 hour:ho)))
-
 show me all important meetings on jan 2
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string date) (string =) (date 2015 1 2)) (string is_important)))
-
-meeting whose date is jan 2 and that is important
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string date) (string =) (date 2015 1 2)) (string is_important)))
 
 show me all meetings alice has attended at the greenberg cafe
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string attendee) (string =) alice:pe) (string location) (string =) greenberg_cafe:lo))
 
-meeting whose attendee is alice and whose location is greenberg cafe
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string attendee) (string =) alice:pe) (string location) (string =) greenberg_cafe:lo))
-
 show me all meetings after january 2nd
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string date)) (string >) (ensureNumericEntity (date 2015 1 2))))
-
-meeting whose date is larger than jan 2
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string date)) (string >) (ensureNumericEntity (date 2015 1 2))))
 
 person attending least number of meetings
 (listValue (countSuperlative (getProperty (singleton person:pe) (string type)) (string min) (reverse (string attendee)) (getProperty (singleton meeting:me) (string type))))
 
-person that is attendee of the least number of meeting
-(listValue (countSuperlative (getProperty (singleton person:pe) (string type)) (string min) (reverse (string attendee)) (getProperty (singleton meeting:me) (string type))))
-
 what meeting has the earliest date
-(listValue (superlative (getProperty (singleton meeting:me) (string type)) (string min) (ensureNumericProperty (string date))))
-
-meeting that has the smallest date
 (listValue (superlative (getProperty (singleton meeting:me) (string type)) (string min) (ensureNumericProperty (string date))))
 
 what meeting ends no earlier than 10am
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string <) (ensureNumericEntity (time 10 0))))
 
-meeting whose end time is smaller than 10am
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string <) (ensureNumericEntity (time 10 0))))
-
 what meetings occur on the same day as weekly standup
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (string date) (string =) (getProperty weekly_standup:me (string date))))
-
-meeting whose date is date of weekly standup
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (string date) (string =) (getProperty weekly_standup:me (string date))))
 
 what meetings take place in greenbug cafe
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string location) (string =) greenberg_cafe:lo) (string location) (string =) greenberg_cafe:lo))
 
-meeting whose location is greenberg cafe and whose location is greenberg cafe
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string location) (string =) greenberg_cafe:lo) (string location) (string =) greenberg_cafe:lo))
-
 what meeting has a length smaller than three hours
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string length)) (string <) (ensureNumericEntity (number 3 hour:ho))))
-
-meeting whose length is smaller than three hours
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string length)) (string <) (ensureNumericEntity (number 3 hour:ho))))
 
 show me the meetings with the most attendees
 (listValue (countSuperlative (getProperty (singleton meeting:me) (string type)) (string max) (string attendee)))
 
-meeting that has the most number of attendee
-(listValue (countSuperlative (getProperty (singleton meeting:me) (string type)) (string max) (string attendee)))
-
 what meeting is starting the same time as weekly standup
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (string start_time) (string =) (getProperty weekly_standup:me (string start_time))))
-
-meeting whose start time is start time of weekly standup
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (string start_time) (string =) (getProperty weekly_standup:me (string start_time))))
 
 show me meetings starting at 10am that take 3 horus
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string start_time) (string =) (time 10 0)) (string length) (string =) (number 3 hour:ho)))
 
-meeting whose start time is 10am and whose length is three hours
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string start_time) (string =) (time 10 0)) (string length) (string =) (number 3 hour:ho)))
-
 location same as weekly meeting or annual review
-(listValue (filter (getProperty (singleton location:lo) (string type)) (reverse (string location)) (string =) (concat weekly_standup:me annual_review:me)))
-
-location that is location of weekly standup or annual review
 (listValue (filter (getProperty (singleton location:lo) (string type)) (reverse (string location)) (string =) (concat weekly_standup:me annual_review:me)))
 
 meeting in which alice is attending and ends at 10 am
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string end_time) (string =) (time 10 0)) (string attendee) (string =) alice:pe))
 
-meeting whose end time is 10am and whose attendee is alice
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string end_time) (string =) (time 10 0)) (string attendee) (string =) alice:pe))
-
 what meeting start time is later than 10am
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string start_time)) (string >) (ensureNumericEntity (time 10 0))))
-
-meeting whose start time is larger than 10am
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string start_time)) (string >) (ensureNumericEntity (time 10 0))))
 
 meetings that are not attended by alice
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (string attendee) (string !=) alice:pe))
 
-meeting whose attendee is not alice
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (string attendee) (string !=) alice:pe))
-
 what meeting has the fewest locations
-(listValue (countSuperlative (getProperty (singleton meeting:me) (string type)) (string min) (string location)))
-
-meeting that has the least number of location
 (listValue (countSuperlative (getProperty (singleton meeting:me) (string type)) (string min) (string location)))
 
 show me all meetings ending after the weekly standup ends
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string start_time)) (string >) (ensureNumericEntity (getProperty weekly_standup:me (string end_time)))))
 
-meeting whose start time is larger than end time of weekly standup
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string start_time)) (string >) (ensureNumericEntity (getProperty weekly_standup:me (string end_time)))))
-
 what meeting is at greenberg cafe and ends at 10am
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string location) (string =) greenberg_cafe:lo) (string end_time) (string =) (time 10 0)))
-
-meeting whose location is greenberg cafe and whose end time is 10am
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string location) (string =) greenberg_cafe:lo) (string end_time) (string =) (time 10 0)))
 
 meeting is not at greenberg cafe
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (string location) (string !=) greenberg_cafe:lo))
 
-meeting whose location is not greenberg cafe
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (string location) (string !=) greenberg_cafe:lo))
-
 what meetings have a length of three hours and alice is attending
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string length) (string =) (number 3 hour:ho)) (string attendee) (string =) alice:pe))
-
-meeting whose length is three hours and whose attendee is alice
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string length) (string =) (number 3 hour:ho)) (string attendee) (string =) alice:pe))
 
 what meetings are scheduled for a date no earlier than jan 2
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string date)) (string >=) (ensureNumericEntity (date 2015 1 2))))
 
-meeting whose date is at least jan 2
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string date)) (string >=) (ensureNumericEntity (date 2015 1 2))))
-
 locations of meetings that end at 10am
-(listValue (filter (getProperty (singleton location:lo) (string type)) (reverse (string location)) (string =) (filter (getProperty (singleton meeting:me) (string type)) (string end_time) (string =) (time 10 0))))
-
-location that is location of meeting whose end time is 10am
 (listValue (filter (getProperty (singleton location:lo) (string type)) (reverse (string location)) (string =) (filter (getProperty (singleton meeting:me) (string type)) (string end_time) (string =) (time 10 0))))
 
 what meetings end no later then the weekly standup meeting ends
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string >=) (ensureNumericEntity (getProperty weekly_standup:me (string end_time)))))
 
-meeting whose end time is at least end time of weekly standup
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string >=) (ensureNumericEntity (getProperty weekly_standup:me (string end_time)))))
-
 what meeting is in either greenberg cage or central office
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (string location) (string =) (concat greenberg_cafe:lo central_office:lo)))
-
-meeting whose location is greenberg cafe or central office
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (string location) (string =) (concat greenberg_cafe:lo central_office:lo)))
 
 show me all meetings happening at greenberg cafe or central office
 (listValue (concat greenberg_cafe:lo central_office:lo))
 
-greenberg cafe or central office
-(listValue (concat greenberg_cafe:lo central_office:lo))
-
 what is the average length of all meetings
-(listValue (aggregate (string avg) (getProperty (getProperty (singleton meeting:me) (string type)) (string length))))
-
-average length of meeting
 (listValue (aggregate (string avg) (getProperty (getProperty (singleton meeting:me) (string type)) (string length))))
 
 who is attending the three hour meeting
 (listValue (filter (getProperty (singleton person:pe) (string type)) (reverse (string attendee)) (string =) (filter (getProperty (singleton meeting:me) (string type)) (string length) (string =) (number 3 hour:ho))))
 
-person that is attendee of meeting whose length is three hours
-(listValue (filter (getProperty (singleton person:pe) (string type)) (reverse (string attendee)) (string =) (filter (getProperty (singleton meeting:me) (string type)) (string length) (string =) (number 3 hour:ho))))
-
 what are some important meetings
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (string is_important)))
-
-meeting that is important
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (string is_important)))
 
 show me all meetings which start at the same time or later than the weekly standup
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string start_time)) (string >=) (ensureNumericEntity (getProperty weekly_standup:me (string start_time)))))
 
-meeting whose start time is at least start time of weekly standup
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string start_time)) (string >=) (ensureNumericEntity (getProperty weekly_standup:me (string start_time)))))
-
 meeting on jan 2 which ends at 10 am
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string date) (string =) (date 2015 1 2)) (string end_time) (string =) (time 10 0)))
-
-meeting whose date is jan 2 and whose end time is 10am
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string date) (string =) (date 2015 1 2)) (string end_time) (string =) (time 10 0)))
 
 what meeting starts earlier than 10am or 3pm
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string start_time)) (string <) (ensureNumericEntity (concat (time 10 0) (time 15 0)))))
 
-meeting whose start time is smaller than 10am or 3pm
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string start_time)) (string <) (ensureNumericEntity (concat (time 10 0) (time 15 0)))))
-
 show me all meetings that end at 10am in greenberg cafe
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string location) (string =) greenberg_cafe:lo) (string end_time) (string =) (time 10 0)))
-
-meeting whose location is greenberg cafe and whose end time is 10am
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string location) (string =) greenberg_cafe:lo) (string end_time) (string =) (time 10 0)))
 
 tell me the all meetings begins after 10am or 3pm
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string start_time)) (string >=) (ensureNumericEntity (concat (time 10 0) (time 15 0)))))
 
-meeting whose start time is at least 10am or 3pm
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string start_time)) (string >=) (ensureNumericEntity (concat (time 10 0) (time 15 0)))))
-
 people that attend important meetings
-(listValue (filter (getProperty (singleton person:pe) (string type)) (reverse (string attendee)) (string =) (filter (getProperty (singleton meeting:me) (string type)) (string is_important))))
-
-person that is attendee of meeting that is important
 (listValue (filter (getProperty (singleton person:pe) (string type)) (reverse (string attendee)) (string =) (filter (getProperty (singleton meeting:me) (string type)) (string is_important))))
 
 how many locations house meetings
 (listValue (ccount (getProperty (singleton location:lo) (string type))))
 
-number of location
-(listValue (ccount (getProperty (singleton location:lo) (string type))))
-
 show me all meetings happening before january 2nd
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string date)) (string <) (ensureNumericEntity (date 2015 1 2))))
-
-meeting whose date is smaller than jan 2
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string date)) (string <) (ensureNumericEntity (date 2015 1 2))))
 
 what is the date of weekly standup
 (listValue (getProperty weekly_standup:me (string date)))
 
-date of weekly standup
-(listValue (getProperty weekly_standup:me (string date)))
-
 create a meeting for jan 2nd until 10am
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string date) (string =) (date 2015 1 2)) (string end_time) (string =) (time 10 0)))
-
-meeting whose date is jan 2 and whose end time is 10am
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string date) (string =) (date 2015 1 2)) (string end_time) (string =) (time 10 0)))
 
 what meeting is on jan 2
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string date) (string =) (date 2015 1 2)) (string date) (string =) (date 2015 1 2)))
 
-meeting whose date is jan 2 and whose date is jan 2
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string date) (string =) (date 2015 1 2)) (string date) (string =) (date 2015 1 2)))
-
 show me important meetings at greenberg cafe
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string is_important)) (string location) (string =) greenberg_cafe:lo))
-
-meeting that is important and whose location is greenberg cafe
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string is_important)) (string location) (string =) greenberg_cafe:lo))
 
 meeting starting at time of weekly standup
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (string start_time) (string =) (getProperty weekly_standup:me (string start_time))))
 
-meeting whose start time is start time of weekly standup
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (string start_time) (string =) (getProperty weekly_standup:me (string start_time))))
-
 meetings held in the same location as the weekly standup meeting
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (string location) (string =) (getProperty weekly_standup:me (string location))))
-
-meeting whose location is location of weekly standup
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (string location) (string =) (getProperty weekly_standup:me (string location))))
 
 show me all meetings which are either shorter or longer than three hours
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (string length) (string !=) (number 3 hour:ho)))
 
-meeting whose length is not three hours
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (string length) (string !=) (number 3 hour:ho)))
-
 what meeting lasts from one to three hours
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (string length) (string =) (concat (number 3 hour:ho) (number 1 hour:ho))))
-
-meeting whose length is three hours or one hour
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (string length) (string =) (concat (number 3 hour:ho) (number 1 hour:ho))))
 
 what meeting has alice attending on jan 2
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string attendee) (string =) alice:pe) (string date) (string =) (date 2015 1 2)))
 
-meeting whose attendee is alice and whose date is jan 2
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string attendee) (string =) alice:pe) (string date) (string =) (date 2015 1 2)))
-
 show me all meetings alice has attended marked as important
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string attendee) (string =) alice:pe) (string is_important)))
-
-meeting whose attendee is alice and that is important
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string attendee) (string =) alice:pe) (string is_important)))
 
 meetings that are longer than the weekly startup meeting
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string length)) (string >) (ensureNumericEntity (getProperty weekly_standup:me (string length)))))
 
-meeting whose length is larger than length of weekly standup
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string length)) (string >) (ensureNumericEntity (getProperty weekly_standup:me (string length)))))
-
 show me the important meetings that last three hours
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string is_important)) (string length) (string =) (number 3 hour:ho)))
-
-meeting that is important and whose length is three hours
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string is_important)) (string length) (string =) (number 3 hour:ho)))
 
 what meeting begins latest
 (listValue (superlative (getProperty (singleton meeting:me) (string type)) (string max) (ensureNumericProperty (string start_time))))
 
-meeting that has the largest start time
-(listValue (superlative (getProperty (singleton meeting:me) (string type)) (string max) (ensureNumericProperty (string start_time))))
-
 show me all meetings marked important ending at 10 am
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string is_important)) (string end_time) (string =) (time 10 0)))
-
-meeting that is important and whose end time is 10am
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string is_important)) (string end_time) (string =) (time 10 0)))
 
 what meeting ends at the same time as weekly standup or later
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string >=) (ensureNumericEntity (getProperty weekly_standup:me (string end_time)))))
 
-meeting whose end time is at least end time of weekly standup
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string >=) (ensureNumericEntity (getProperty weekly_standup:me (string end_time)))))
-
 show me all meetings that alice is attending on jan 2
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string attendee) (string =) alice:pe) (string date) (string =) (date 2015 1 2)))
-
-meeting whose attendee is alice and whose date is jan 2
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string attendee) (string =) alice:pe) (string date) (string =) (date 2015 1 2)))
 
 what meeting ends at the start time of weekly standup
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (string end_time) (string =) (getProperty weekly_standup:me (string start_time))))
 
-meeting whose end time is start time of weekly standup
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (string end_time) (string =) (getProperty weekly_standup:me (string start_time))))
-
 meetings held in less than two locations
-(listValue (countComparative (getProperty (singleton meeting:me) (string type)) (string location) (string <) (number 2)))
-
-meeting that has less than two location
 (listValue (countComparative (getProperty (singleton meeting:me) (string type)) (string location) (string <) (number 2)))
 
 what important meeting has an end time of 10am
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string end_time) (string =) (time 10 0)) (string is_important)))
 
-meeting whose end time is 10am and that is important
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string end_time) (string =) (time 10 0)) (string is_important)))
-
 meetings that are on or before january 3
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string date)) (string >=) (ensureNumericEntity (concat (date 2015 1 2) (date 2015 1 3)))))
-
-meeting whose date is at least jan 2 or jan 3
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string date)) (string >=) (ensureNumericEntity (concat (date 2015 1 2) (date 2015 1 3)))))
 
 what meeting has the same end time as that of weekly standup
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string <=) (ensureNumericEntity (getProperty weekly_standup:me (string end_time)))))
 
-meeting whose end time is at most end time of weekly standup
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string <=) (ensureNumericEntity (getProperty weekly_standup:me (string end_time)))))
-
 show me meetings before 10am
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string <) (ensureNumericEntity (time 10 0))))
-
-meeting whose end time is smaller than 10am
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string <) (ensureNumericEntity (time 10 0))))
 
 what meeting has the most attendees
 (listValue (countSuperlative (getProperty (singleton meeting:me) (string type)) (string max) (string attendee)))
 
-meeting that has the most number of attendee
-(listValue (countSuperlative (getProperty (singleton meeting:me) (string type)) (string max) (string attendee)))
-
 show me all meetings that run either three hours or one hour
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (string length) (string =) (concat (number 3 hour:ho) (number 1 hour:ho))))
-
-meeting whose length is three hours or one hour
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (string length) (string =) (concat (number 3 hour:ho) (number 1 hour:ho))))
 
 show me the meeting that starts and ends at 10 am
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string start_time) (string =) (time 10 0)) (string end_time) (string =) (time 10 0)))
 
-meeting whose start time is 10am and whose end time is 10am
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string start_time) (string =) (time 10 0)) (string end_time) (string =) (time 10 0)))
-
 show me all meetings that end earlier than the week standup meeting ends
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string <) (ensureNumericEntity (getProperty weekly_standup:me (string end_time)))))
-
-meeting whose end time is smaller than end time of weekly standup
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string <) (ensureNumericEntity (getProperty weekly_standup:me (string end_time)))))
 
 which meeting has the most people scheduled to attend
 (listValue (countSuperlative (getProperty (singleton meeting:me) (string type)) (string max) (string attendee)))
 
-meeting that has the most number of attendee
-(listValue (countSuperlative (getProperty (singleton meeting:me) (string type)) (string max) (string attendee)))
-
 what person is attending a meeting that ends at 10am
-(listValue (filter (getProperty (singleton person:pe) (string type)) (reverse (string attendee)) (string =) (filter (getProperty (singleton meeting:me) (string type)) (string end_time) (string =) (time 10 0))))
-
-person that is attendee of meeting whose end time is 10am
 (listValue (filter (getProperty (singleton person:pe) (string type)) (reverse (string attendee)) (string =) (filter (getProperty (singleton meeting:me) (string type)) (string end_time) (string =) (time 10 0))))
 
 meetings on january 2 or january 3
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (string date) (string =) (concat (date 2015 1 2) (date 2015 1 3))))
 
-meeting whose date is jan 2 or jan 3
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (string date) (string =) (concat (date 2015 1 2) (date 2015 1 3))))
-
 show me meetings that take 3 hours and start at 10am
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string length) (string =) (number 3 hour:ho)) (string start_time) (string =) (time 10 0)))
-
-meeting whose length is three hours and whose start time is 10am
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string length) (string =) (number 3 hour:ho)) (string start_time) (string =) (time 10 0)))
 
 alice or bob is an attendee at the meeting
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (string attendee) (string =) (concat alice:pe bob:pe)))
 
-meeting whose attendee is alice or bob
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (string attendee) (string =) (concat alice:pe bob:pe)))
-
 show me all meetings which are scheduled no later than january 3
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string date)) (string <=) (ensureNumericEntity (concat (date 2015 1 2) (date 2015 1 3)))))
-
-meeting whose date is at most jan 2 or jan 3
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string date)) (string <=) (ensureNumericEntity (concat (date 2015 1 2) (date 2015 1 3)))))
 
 who attends the weekly standup meeting
 (listValue (getProperty weekly_standup:me (string attendee)))
 
-attendee of weekly standup
-(listValue (getProperty weekly_standup:me (string attendee)))
-
 show me all meetings starting at 10 am or after
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string start_time)) (string >=) (ensureNumericEntity (time 10 0))))
-
-meeting whose start time is at least 10am
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string start_time)) (string >=) (ensureNumericEntity (time 10 0))))
 
 meetings that end later than 10am
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string >) (ensureNumericEntity (time 10 0))))
 
-meeting whose end time is larger than 10am
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string >) (ensureNumericEntity (time 10 0))))
-
 show me all meetings which have only one location
-(listValue (countComparative (getProperty (singleton meeting:me) (string type)) (string location) (string <) (number 2)))
-
-meeting that has less than two location
 (listValue (countComparative (getProperty (singleton meeting:me) (string type)) (string location) (string <) (number 2)))
 
 who has attended the weekly standup meeting
 (listValue (getProperty weekly_standup:me (string attendee)))
 
-attendee of weekly standup
-(listValue (getProperty weekly_standup:me (string attendee)))
-
 who are the people attending at least two different meetings
-(listValue (countComparative (getProperty (singleton person:pe) (string type)) (reverse (string attendee)) (string >=) (number 2) (getProperty (singleton meeting:me) (string type))))
-
-person that is attendee of at least two meeting
 (listValue (countComparative (getProperty (singleton person:pe) (string type)) (reverse (string attendee)) (string >=) (number 2) (getProperty (singleton meeting:me) (string type))))
 
 what meeting who starts right right after weekly standup
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string start_time)) (string >=) (ensureNumericEntity (getProperty weekly_standup:me (string end_time)))))
 
-meeting whose start time is at least end time of weekly standup
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string start_time)) (string >=) (ensureNumericEntity (getProperty weekly_standup:me (string end_time)))))
-
 show me all meetings that have two or fewer attendees
-(listValue (countComparative (getProperty (singleton meeting:me) (string type)) (string attendee) (string <=) (number 2)))
-
-meeting that has at most two attendee
 (listValue (countComparative (getProperty (singleton meeting:me) (string type)) (string attendee) (string <=) (number 2)))
 
 what meeting ends before 3pm or 10am
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string <) (ensureNumericEntity (concat (time 10 0) (time 15 0)))))
 
-meeting whose end time is smaller than 10am or 3pm
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string <) (ensureNumericEntity (concat (time 10 0) (time 15 0)))))
-
 what meetings have no more than two different locations
-(listValue (countComparative (getProperty (singleton meeting:me) (string type)) (string location) (string <=) (number 2)))
-
-meeting that has at most two location
 (listValue (countComparative (getProperty (singleton meeting:me) (string type)) (string location) (string <=) (number 2)))
 
 meetings that are longer than three hours or longer than an hour
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string length)) (string >) (ensureNumericEntity (concat (number 3 hour:ho) (number 1 hour:ho)))))
 
-meeting whose length is larger than three hours or one hour
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string length)) (string >) (ensureNumericEntity (concat (number 3 hour:ho) (number 1 hour:ho)))))
-
 show me all the meetings that have two or more participants
-(listValue (countComparative (getProperty (singleton meeting:me) (string type)) (string attendee) (string >=) (number 2)))
-
-meeting that has at least two attendee
 (listValue (countComparative (getProperty (singleton meeting:me) (string type)) (string attendee) (string >=) (number 2)))
 
 show me all meetings beginning at 10 am which are three hours long
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string start_time) (string =) (time 10 0)) (string length) (string =) (number 3 hour:ho)))
 
-meeting whose start time is 10am and whose length is three hours
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string start_time) (string =) (time 10 0)) (string length) (string =) (number 3 hour:ho)))
-
 meeting with fewest locations
-(listValue (countSuperlative (getProperty (singleton meeting:me) (string type)) (string min) (string location)))
-
-meeting that has the least number of location
 (listValue (countSuperlative (getProperty (singleton meeting:me) (string type)) (string min) (string location)))
 
 what three hour meeting is at greenberg cafe
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string location) (string =) greenberg_cafe:lo) (string length) (string =) (number 3 hour:ho)))
 
-meeting whose location is greenberg cafe and whose length is three hours
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string location) (string =) greenberg_cafe:lo) (string length) (string =) (number 3 hour:ho)))
-
 show me all attendees of the weekly standup meeting
-(listValue (filter (getProperty (singleton person:pe) (string type)) (reverse (string attendee)) (string =) weekly_standup:me))
-
-person that is attendee of weekly standup
 (listValue (filter (getProperty (singleton person:pe) (string type)) (reverse (string attendee)) (string =) weekly_standup:me))
 
 show me all meetings on january 2nd which are three hours long
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string date) (string =) (date 2015 1 2)) (string length) (string =) (number 3 hour:ho)))
 
-meeting whose date is jan 2 and whose length is three hours
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string date) (string =) (date 2015 1 2)) (string length) (string =) (number 3 hour:ho)))
-
 which important meeting starts at 10 in the morning
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string start_time) (string =) (time 10 0)) (string is_important)))
-
-meeting whose start time is 10am and that is important
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string start_time) (string =) (time 10 0)) (string is_important)))
 
 show me all meetings which end at the same time or later than the weekly standup meeting begins
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string >=) (ensureNumericEntity (getProperty weekly_standup:me (string start_time)))))
 
-meeting whose end time is at least start time of weekly standup
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string >=) (ensureNumericEntity (getProperty weekly_standup:me (string start_time)))))
-
 show me meeting happening after the day of weekly standup
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string date)) (string >) (ensureNumericEntity (getProperty weekly_standup:me (string date)))))
-
-meeting whose date is larger than date of weekly standup
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string date)) (string >) (ensureNumericEntity (getProperty weekly_standup:me (string date)))))
 
 find me a meeting that ends 10am or later
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string >=) (ensureNumericEntity (time 10 0))))
 
-meeting whose end time is at least 10am
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string >=) (ensureNumericEntity (time 10 0))))
-
 what meeting starts at 10am and ends at 10am q
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string start_time) (string =) (time 10 0)) (string end_time) (string =) (time 10 0)))
-
-meeting whose start time is 10am and whose end time is 10am
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string start_time) (string =) (time 10 0)) (string end_time) (string =) (time 10 0)))
 
 what meeting was on or before jan 2
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string date)) (string <=) (ensureNumericEntity (date 2015 1 2))))
 
-meeting whose date is at most jan 2
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string date)) (string <=) (ensureNumericEntity (date 2015 1 2))))
-
 who is the person attending more than two meetings
-(listValue (countComparative (getProperty (singleton person:pe) (string type)) (reverse (string attendee)) (string >) (number 2) (getProperty (singleton meeting:me) (string type))))
-
-person that is attendee of more than two meeting
 (listValue (countComparative (getProperty (singleton person:pe) (string type)) (reverse (string attendee)) (string >) (number 2) (getProperty (singleton meeting:me) (string type))))
 
 meeting at greenberg cafe ends at 1000 am
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string location) (string =) greenberg_cafe:lo) (string end_time) (string =) (time 10 0)))
 
-meeting whose location is greenberg cafe and whose end time is 10am
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string location) (string =) greenberg_cafe:lo) (string end_time) (string =) (time 10 0)))
-
 show me all meetings ending at or after 10 am
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string >=) (ensureNumericEntity (time 10 0))))
-
-meeting whose end time is at least 10am
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string >=) (ensureNumericEntity (time 10 0))))
 
 what important meeting has a start time at 10am
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string start_time) (string =) (time 10 0)) (string is_important)))
 
-meeting whose start time is 10am and that is important
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string start_time) (string =) (time 10 0)) (string is_important)))
-
 show me all meetings with alice
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (string attendee) (string =) alice:pe))
-
-meeting whose attendee is alice
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (string attendee) (string =) alice:pe))
 
 show me meetings after the weekly standup day
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string date)) (string >=) (ensureNumericEntity (getProperty weekly_standup:me (string date)))))
 
-meeting whose date is at least date of weekly standup
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string date)) (string >=) (ensureNumericEntity (getProperty weekly_standup:me (string date)))))
-
 location of meetings that start at 10am
-(listValue (filter (getProperty (singleton location:lo) (string type)) (reverse (string location)) (string =) (filter (getProperty (singleton meeting:me) (string type)) (string start_time) (string =) (time 10 0))))
-
-location that is location of meeting whose start time is 10am
 (listValue (filter (getProperty (singleton location:lo) (string type)) (reverse (string location)) (string =) (filter (getProperty (singleton meeting:me) (string type)) (string start_time) (string =) (time 10 0))))
 
 what meeting has length shorter than one to three hours
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string length)) (string <) (ensureNumericEntity (concat (number 3 hour:ho) (number 1 hour:ho)))))
 
-meeting whose length is smaller than three hours or one hour
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string length)) (string <) (ensureNumericEntity (concat (number 3 hour:ho) (number 1 hour:ho)))))
-
 what meeting has less than two locations
-(listValue (countComparative (getProperty (singleton meeting:me) (string type)) (string location) (string <) (number 2)))
-
-meeting that has less than two location
 (listValue (countComparative (getProperty (singleton meeting:me) (string type)) (string location) (string <) (number 2)))
 
 what meeting has a date earlier than weekly startup
 (listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string date)) (string <) (ensureNumericEntity (getProperty weekly_standup:me (string date)))))
 
-meeting whose date is smaller than date of weekly standup
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string date)) (string <) (ensureNumericEntity (getProperty weekly_standup:me (string date)))))
-
 show me all three hour meetings that alice is attending
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string attendee) (string =) alice:pe) (string length) (string =) (number 3 hour:ho)))
-
-meeting whose attendee is alice and whose length is three hours
 (listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string attendee) (string =) alice:pe) (string length) (string =) (number 3 hour:ho)))
 
