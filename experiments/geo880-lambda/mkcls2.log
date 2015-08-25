@@ -1,10 +1,10 @@
 
 ***** 1 runs. (algorithm:TA)*****
-;KategProblem:cats: 50   words: 117
+;KategProblem:cats: 50   words: 252
 
-start-costs: MEAN: 7413.98 (7413.98-7413.98)  SIGMA:0   
-  end-costs: MEAN: 6386.67 (6386.67-6386.67)  SIGMA:0   
-   start-pp: MEAN: 11.7928 (11.7928-11.7928)  SIGMA:0   
-     end-pp: MEAN: 5.36703 (5.36703-5.36703)  SIGMA:0   
- iterations: MEAN: 3296 (3296-3296)  SIGMA:0   
-       time: MEAN: 0.067599 (0.067599-0.067599)  SIGMA:0   
+start-costs: MEAN: 56830.3 (56830.3-56830.3)  SIGMA:0   
+  end-costs: MEAN: 50379.6 (50379.6-50379.6)  SIGMA:0   
+   start-pp: MEAN: 25.0867 (25.0867-25.0867)  SIGMA:0   
+     end-pp: MEAN: 10.3712 (10.3712-10.3712)  SIGMA:0   
+ iterations: MEAN: 5387 (5387-5387)  SIGMA:0   
+       time: MEAN: 0.179393 (0.179393-0.179393)  SIGMA:0   

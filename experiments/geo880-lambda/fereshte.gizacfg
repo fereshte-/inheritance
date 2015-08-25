@@ -19,9 +19,9 @@ emprobforempty 0.4
 emsmoothhmm 2
 hmmdumpfrequency 0
 hmmiterations 5
-l 115-08-13.150140.fereshte.log
+l 115-08-25.154825.fereshte.log
 log 0
-logfile 115-08-13.150140.fereshte.log
+logfile 115-08-25.154825.fereshte.log
 m1 5
 m2 0
 m3 5

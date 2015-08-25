@@ -1,0 +1,26 @@
+		       Welcome to CSAIL Ubuntu 
+
+Please sign up for the workstations-announce mailing list.  See 
+https://lists.csail.mit.edu/mailman/listinfo/workstations-announce for 
+more info.  This low-traffic mailing list will be used for important
+announcements by the administrators of this machine.
+
+Some documentation can be found at  
+http://tig.csail.mit.edu/wiki/TIG/OperatingSystemsSupport
+
+Also consider joining the workstation-discuss mailing list if you're
+interested in helping develop the CSAIL workstation environment.
+
+hippo.csail.mit.edu
+Ubuntu 12.04.5 LTS
+Supermicro  X8DA3
+Serial Number: 1234567890
+
+You have mail.
+Last login: Tue Aug 25 17:25:48 2015 from 171.66.208.145
+fereshte@hippo:~$ Feryjoon1
+-bash: Feryjoon1: command not found
+fereshte@hippo:~$ 
+fereshte@hippo:~$ 
+fereshte@hippo:~$ 
+fereshte@hippo:~$ 
