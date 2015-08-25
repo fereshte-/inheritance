@@ -1,19 +1,19 @@
 /***************************  LICENSE  *******************************
-* This file is part of UBL.
-* 
-* UBL is free software: you can redistribute it and/or modify
-* it under the terms of the GNU Lesser General Public License as 
-* published by the Free Software Foundation, either version 3 of the 
-* License, or (at your option) any later version.
-* 
-* UBL is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU Lesser General Public License for more details.
-*
-* You should have received a copy of the GNU Lesser General Public 
-* License along with UBL.  If not, see <http://www.gnu.org/licenses/>.
-***********************************************************************/
+ * This file is part of UBL.
+ * 
+ * UBL is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the 
+ * License, or (at your option) any later version.
+ * 
+ * UBL is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public 
+ * License along with UBL.  If not, see <http://www.gnu.org/licenses/>.
+ ***********************************************************************/
 
 
 
@@ -74,7 +74,7 @@ public class PType extends Type {
 	public Type copy(){
 		return new PType(type);
 	}
-	
+
 	// reads in one line of the type heirarchy file
 	public void setVals(String input){
 		if (input.indexOf("(")!=-1){
@@ -119,7 +119,7 @@ public class PType extends Type {
 		}
 		return false;
 	}
-	
+
 	// check if tin is a superType of this
 	public boolean subType(Type tin){
 		if (!(tin instanceof PType)){
@@ -134,7 +134,7 @@ public class PType extends Type {
 		}
 		return false;
 	}
-	
+
 	// check if this is a superType of tin
 	public boolean ancestor(Type tin){
 		if (!(tin instanceof PType)){
@@ -148,8 +148,8 @@ public class PType extends Type {
 		}
 		return false;
 	}
-	
-	
+
+
 	static public void addTypes(String l){
 		LispReader lr = new LispReader( new StringReader(l));
 		while (lr.hasNext()){
@@ -193,7 +193,7 @@ public class PType extends Type {
 	static public List getPTypes(){
 		return types;
 	}
-	
+
 	// all things of type T have CCG category S
 	// all things of type I or E have CCG category NP
 	public Cat makeCat(){
@@ -217,6 +217,19 @@ public class PType extends Type {
 				return p;
 			p = p.sup;
 		}
+		return null;
+	}
+
+	public Type commonSubType(Type tin){
+		if (!(tin instanceof PType)){
+			return null;
+		}
+		PType p= (PType)tin;
+		if (this.subType(p))
+			return this;
+		if(p.subType(this))
+			return p;
+
 		return null;
 	}
 

@@ -191,7 +191,7 @@ public class ChangeFormat {
 
 			double portion = Double.parseDouble(args[0]) / 10 ;
 			changeFormat.makePortion(portion, "../../data/train.txt", "train.txt");
-			changeFormat.makePortion(0.5, "../../data/test.txt", "test.txt");
+			changeFormat.makePortion(1, "../../data/test.txt", "test.txt");
 		}else{
 			String fileName = args[0];
 			changeFormat.readyForGiza(fileName);

@@ -32,5 +32,4 @@ public class Globals {
     static public int lastWordIndex;
     static public List<String> tokens;
     static public Lexicon lexRule;
-
 }

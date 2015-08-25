@@ -1,504 +1,654 @@
+person who has not published article in multivariate_data_analysis
+(listValue (filter (getProperty (singleton person:type) (string type)) (reverse (string author)) (string !=) multivariate_data_analysis:ar))
+
+what person is not the author of multivariate_data_analysis
+(listValue (filter (getProperty (singleton person:type) (string type)) (reverse (string author)) (string !=) multivariate_data_analysis:ar))
+
+articles that do not cite multivariate_data_analysis
+(listValue (filter (getProperty (singleton article:tyar) (string type)) (string cites) (string !=) multivariate_data_analysis:ar))
+
+articles published in the annals_of_statistics citing multivariate_data_analysis
+(listValue (filter (filter (getProperty (singleton article:tyar) (string type)) (string venue) (string =) annals_of_statistics:ve) (string cites) (string =) multivariate_data_analysis:ar))
+
+article citing an article citing multivariate_data_analysis
+(listValue (filter (getProperty (singleton article:tyar) (string type)) (string cites) (string =) (filter (getProperty (singleton article:tyar) (string type)) (string cites) (string =) multivariate_data_analysis:ar)))
+
+publisher of article citing multivariate_data_analysis
+(listValue (filter (getProperty (singleton venue:tyve) (string type)) (reverse (string venue)) (string =) (filter (getProperty (singleton article:tyar) (string type)) (reverse (string cites)) (string =) multivariate_data_analysis:ar)))
+
+article written by efron that won an award
+(listValue (filter (filter (getProperty (singleton article:tyar) (string type)) (string won_award)) (string author) (string =) efron:pe))
+
+writers who didnt write multivariate_data_analysis
+(listValue (filter (getProperty (singleton person:type) (string type)) (reverse (string author)) (string !=) multivariate_data_analysis:ar))
+
+articles that cite articles published in annals_of_statistics
+(listValue (filter (getProperty (singleton article:tyar) (string type)) (string cites) (string =) (filter (getProperty (singleton article:tyar) (string type)) (string venue) (string =) annals_of_statistics:ve)))
+
+what article is cited by an efron article
+(listValue (filter (getProperty (singleton article:tyar) (string type)) (reverse (string cites)) (string =) (filter (getProperty (singleton article:tyar) (string type)) (string author) (string =) efron:pe)))
+
+what article cites another article with a publication date of 2004
+(listValue (filter (getProperty (singleton article:tyar) (string type)) (string cites) (string =) (filter (getProperty (singleton article:tyar) (string type)) (string publication_date) (string =) (date 2004 -1 -1))))
+
+publications containing articles that cite multivariate_data_analysis
+(listValue (filter (getProperty (singleton venue:tyve) (string type)) (reverse (string venue)) (string =) (filter (getProperty (singleton article:tyar) (string type)) (string cites) (string =) multivariate_data_analysis:ar)))
+
+articles that cite awardwinning articles
+(listValue (filter (getProperty (singleton article:tyar) (string type)) (string cites) (string =) (filter (getProperty (singleton article:tyar) (string type)) (string won_award))))
+
+what article is in annals_of_statistics and is cited by multivariate_data_analysis
+(listValue (filter (filter (getProperty (singleton article:tyar) (string type)) (string venue) (string =) annals_of_statistics:ve) (reverse (string cites)) (string =) multivariate_data_analysis:ar))
+
+efron articles published in 2004
+(listValue (filter (filter (getProperty (singleton article:tyar) (string type)) (string publication_date) (string =) (date 2004 -1 -1)) (string author) (string =) efron:pe))
+
+find an article by efron or lakoff
+(listValue (filter (getProperty (singleton article:tyar) (string type)) (string author) (string =) (concat efron:pe lakoff:pe)))
+
+articles found in annals_of_statistics
+(listValue (filter (filter (getProperty (singleton article:tyar) (string type)) (string venue) (string =) annals_of_statistics:ve) (string venue) (string =) annals_of_statistics:ve))
+
+article that cites multivariate_data_analysis
+(listValue (filter (getProperty (singleton article:tyar) (string type)) (reverse (string cites)) (string =) (filter (getProperty (singleton article:tyar) (string type)) (string cites) (string =) multivariate_data_analysis:ar)))
+
+articles published on the same day as multivariate_data_analysis
+(listValue (filter (getProperty (singleton article:tyar) (string type)) (string publication_date) (string =) (getProperty multivariate_data_analysis:ar (string publication_date))))
+
+articles published before multivariate_data_analysis
+(listValue (filter (getProperty (singleton article:tyar) (string type)) (ensureNumericProperty (string publication_date)) (string <) (ensureNumericEntity (getProperty multivariate_data_analysis:ar (string publication_date)))))
+
+what article was published before 2010
+(listValue (filter (getProperty (singleton article:tyar) (string type)) (ensureNumericProperty (string publication_date)) (string <) (ensureNumericEntity (concat (date 2004 -1 -1) (date 2010 -1 -1)))))
+
+what article citing multivariate_data_analysis was in annals_of_statistics
+(listValue (filter (filter (getProperty (singleton article:tyar) (string type)) (string cites) (string =) multivariate_data_analysis:ar) (string venue) (string =) annals_of_statistics:ve))
+
+what article is about a venue of annals_of_statistics or computational_linguistics
+(listValue (filter (getProperty (singleton article:tyar) (string type)) (string venue) (string =) (concat annals_of_statistics:ve computational_linguistics:ve)))
+
+articles by efron
+(listValue (filter (getProperty (singleton article:tyar) (string type)) (string author) (string =) efron:pe))
+
+awarded articles
+(listValue (filter (getProperty (singleton article:tyar) (string type)) (string cites) (string =) (filter (getProperty (singleton article:tyar) (string type)) (string won_award))))
+
+what article written by efron won an award
+(listValue (filter (filter (getProperty (singleton article:tyar) (string type)) (string won_award)) (string author) (string =) efron:pe))
+
+person who is not author of multivariate_data_analysis
+(listValue (filter (getProperty (singleton person:type) (string type)) (reverse (string author)) (string !=) multivariate_data_analysis:ar))
+
+which is the article that cites multivariate_data_analysis that was published in the annals_of_statistics
+(listValue (filter (filter (getProperty (singleton article:tyar) (string type)) (string cites) (string =) multivariate_data_analysis:ar) (string venue) (string =) annals_of_statistics:ve))
+
+articles that do not appear in the same publications as multivariate_data_analysis
+(listValue (filter (getProperty (singleton article:tyar) (string type)) (string venue) (string =) (filter (getProperty (singleton venue:tyve) (string type)) (reverse (string venue)) (string =) multivariate_data_analysis:ar)))
+
+find an article not in annals_of_statistics
+(listValue (filter (getProperty (singleton article:tyar) (string type)) (string venue) (string !=) annals_of_statistics:ve))
+
+name an article about multivariate_data_analysis
+(listValue (filter (getProperty (singleton article:tyar) (string type)) (reverse (string cites)) (string =) (filter (getProperty (singleton article:tyar) (string type)) (string cites) (string =) multivariate_data_analysis:ar)))
+
+writer of multivariate_data_analysis
+(listValue (filter (filter (getProperty (singleton person:type) (string type)) (reverse (string author)) (string =) multivariate_data_analysis:ar) (reverse (string author)) (string =) multivariate_data_analysis:ar))
+
+author citing multivariate_data_analysis in article
+(listValue (filter (getProperty (singleton person:type) (string type)) (reverse (string author)) (string =) (filter (getProperty (singleton article:tyar) (string type)) (reverse (string cites)) (string =) multivariate_data_analysis:ar)))
+
+what article cites articles about multivariate_data_analysis
+(listValue (filter (getProperty (singleton article:tyar) (string type)) (string cites) (string =) (filter (getProperty (singleton article:tyar) (string type)) (string cites) (string =) multivariate_data_analysis:ar)))
+
+article that cites the multivariate_data_analysis article
+(listValue (filter (filter (getProperty (singleton article:tyar) (string type)) (string cites) (string =) multivariate_data_analysis:ar) (string cites) (string =) multivariate_data_analysis:ar))
+
+what article written by efron has a publication date of 2004
+(listValue (filter (filter (getProperty (singleton article:tyar) (string type)) (string publication_date) (string =) (date 2004 -1 -1)) (string author) (string =) efron:pe))
+
+find an article that cites multivariate_data_analysis
+(listValue (filter (filter (getProperty (singleton article:tyar) (string type)) (string cites) (string =) multivariate_data_analysis:ar) (string cites) (string =) multivariate_data_analysis:ar))
+
+articles about a citys annals_of_statistics
+(listValue (filter (filter (getProperty (singleton article:tyar) (string type)) (string cites) (string =) multivariate_data_analysis:ar) (string venue) (string =) annals_of_statistics:ve))
+
+who has not written a multivariate_data_analysis
+(listValue (filter (getProperty (singleton person:type) (string type)) (reverse (string author)) (string !=) multivariate_data_analysis:ar))
+
+what article cited by multivariate_data_analysis won an award
+(listValue (filter (filter (getProperty (singleton article:tyar) (string type)) (string won_award)) (reverse (string cites)) (string =) multivariate_data_analysis:ar))
+
+which authors cite multivariate_data_analysis in their articles
+(listValue (filter (getProperty (singleton person:type) (string type)) (reverse (string author)) (string =) (filter (getProperty (singleton article:tyar) (string type)) (string cites) (string =) multivariate_data_analysis:ar)))
+
+article that cites multivariate_data_analysis and whose publication date is 2004
+(listValue (filter (filter (getProperty (singleton article:tyar) (string type)) (reverse (string cites)) (string =) multivariate_data_analysis:ar) (string publication_date) (string =) (date 2004 -1 -1)))
+
+what are some articles with publications dates between 2004 and 2010
+(listValue (filter (getProperty (singleton article:tyar) (string type)) (string publication_date) (string =) (concat (date 2004 -1 -1) (date 2010 -1 -1))))
+
+articles written by efron
+(listValue (filter (filter (getProperty (singleton article:tyar) (string type)) (string author) (string =) efron:pe) (string author) (string =) efron:pe))
+
+name an article about multivariate_data_analysis in the annals_of_statistics
+(listValue (filter (filter (getProperty (singleton article:tyar) (string type)) (reverse (string cites)) (string =) multivariate_data_analysis:ar) (string venue) (string =) annals_of_statistics:ve))
+
+what article discusses the multivariate_data_analysis of cities
+(listValue (filter (filter (getProperty (singleton article:tyar) (string type)) (string cites) (string =) multivariate_data_analysis:ar) (reverse (string cites)) (string =) multivariate_data_analysis:ar))
+
+venues of articles cited by multivariate_data_analysis
+(listValue (filter (getProperty (singleton venue:tyve) (string type)) (reverse (string venue)) (string =) (filter (getProperty (singleton article:tyar) (string type)) (reverse (string cites)) (string =) multivariate_data_analysis:ar)))
+
+what article published in 2004 cited multivariate_data_analysis
+(listValue (filter (filter (getProperty (singleton article:tyar) (string type)) (string cites) (string =) multivariate_data_analysis:ar) (string publication_date) (string =) (date 2004 -1 -1)))
+
+articles published in annals_of_statistics or computational_linguistics
+(listValue (filter (getProperty (singleton article:tyar) (string type)) (string venue) (string =) (concat annals_of_statistics:ve computational_linguistics:ve)))
+
+the article cites that the author is efron
+(listValue (filter (getProperty (singleton article:tyar) (string type)) (reverse (string cites)) (string =) (filter (getProperty (singleton article:tyar) (string type)) (string author) (string =) efron:pe)))
+
+name an author whose publication date is 2004
+(listValue (filter (getProperty (singleton person:type) (string type)) (reverse (string author)) (string =) (filter (getProperty (singleton article:tyar) (string type)) (string publication_date) (string =) (date 2004 -1 -1))))
+
+name an author of an article about multivariate_data_analysis
+(listValue (filter (getProperty (singleton person:type) (string type)) (reverse (string author)) (string =) (filter (getProperty (singleton article:tyar) (string type)) (reverse (string cites)) (string =) multivariate_data_analysis:ar)))
+
+what venue is about an article that won an award
+(listValue (filter (getProperty (singleton venue:tyve) (string type)) (reverse (string venue)) (string =) (filter (getProperty (singleton article:tyar) (string type)) (string won_award))))
+
+author of the article that cites multivariate_data_analysis
+(listValue (filter (getProperty (singleton person:type) (string type)) (reverse (string author)) (string =) (filter (getProperty (singleton article:tyar) (string type)) (string cites) (string =) multivariate_data_analysis:ar)))
+
+what article cites an article that cites multivariate_data_analysis
+(listValue (filter (getProperty (singleton article:tyar) (string type)) (string cites) (string =) (filter (getProperty (singleton article:tyar) (string type)) (reverse (string cites)) (string =) multivariate_data_analysis:ar)))
+
+find an article published in 2004 in annals_of_statistics
+(listValue (filter (filter (getProperty (singleton article:tyar) (string type)) (string publication_date) (string =) (date 2004 -1 -1)) (string venue) (string =) annals_of_statistics:ve))
+
+article published by efron in 2004
+(listValue (filter (filter (getProperty (singleton article:tyar) (string type)) (string author) (string =) efron:pe) (string publication_date) (string =) (date 2004 -1 -1)))
+
+what article does not have a publication date of 2004
+(listValue (filter (getProperty (singleton article:tyar) (string type)) (string publication_date) (string !=) (date 2004 -1 -1)))
+
+articles published in 2004 cited in multivariate_data_analysis
+(listValue (filter (filter (getProperty (singleton article:tyar) (string type)) (string publication_date) (string =) (date 2004 -1 -1)) (reverse (string cites)) (string =) multivariate_data_analysis:ar))
+
+what article by efron cites multivariate_data_analysis
+(listValue (filter (filter (getProperty (singleton article:tyar) (string type)) (reverse (string cites)) (string =) multivariate_data_analysis:ar) (string author) (string =) efron:pe))
+
+writer of multivariate_data_analysis
+(listValue (filter (filter (getProperty (singleton person:type) (string type)) (reverse (string author)) (string =) multivariate_data_analysis:ar) (reverse (string author)) (string =) multivariate_data_analysis:ar))
+
+articles about cities published after 2004
+(listValue (filter (getProperty (singleton article:tyar) (string type)) (reverse (string cites)) (string =) (filter (getProperty (singleton article:tyar) (string type)) (string publication_date) (string =) (date 2004 -1 -1))))
+
+what article won an award and whose venue is annals and statistics
+(listValue (filter (filter (getProperty (singleton article:tyar) (string type)) (string venue) (string =) annals_of_statistics:ve) (string won_award)))
+
+what are some articles about annals_of_statistics
+(listValue (filter (getProperty (singleton article:tyar) (string type)) (string venue) (string =) annals_of_statistics:ve))
+
+articles written by efron or lakoff
+(listValue (filter (getProperty (singleton article:tyar) (string type)) (string author) (string =) (concat efron:pe lakoff:pe)))
+
+who is the author of an article citing multivariate_data_analysis
+(listValue (filter (getProperty (singleton person:type) (string type)) (reverse (string author)) (string =) (filter (getProperty (singleton article:tyar) (string type)) (string cites) (string =) multivariate_data_analysis:ar)))
+
+articles published in 2004 or 2010
+(listValue (filter (getProperty (singleton article:tyar) (string type)) (string publication_date) (string =) (concat (date 2004 -1 -1) (date 2010 -1 -1))))
+
+articles citing multivariate_data_analysis and cited by multivariate_data_analysis
+(listValue (filter (filter (getProperty (singleton article:tyar) (string type)) (string cites) (string =) multivariate_data_analysis:ar) (reverse (string cites)) (string =) multivariate_data_analysis:ar))
+
+name an article by the author efron
+(listValue (filter (getProperty (singleton article:tyar) (string type)) (reverse (string cites)) (string =) (filter (getProperty (singleton article:tyar) (string type)) (string author) (string =) efron:pe)))
+
+what publications contain multivariate_data_analysis
+(listValue (filter (filter (getProperty (singleton venue:tyve) (string type)) (reverse (string venue)) (string =) multivariate_data_analysis:ar) (reverse (string venue)) (string =) multivariate_data_analysis:ar))
+
+awardwinning articles by efron
+(listValue (filter (filter (getProperty (singleton article:tyar) (string type)) (string author) (string =) efron:pe) (string won_award)))
+
+what efron article was cited by multivariate_data_analysis
+(listValue (filter (filter (getProperty (singleton article:tyar) (string type)) (string author) (string =) efron:pe) (reverse (string cites)) (string =) multivariate_data_analysis:ar))
+
+article cited by article written by efron
+(listValue (filter (getProperty (singleton article:tyar) (string type)) (reverse (string cites)) (string =) (filter (getProperty (singleton article:tyar) (string type)) (string author) (string =) efron:pe)))
+
+award winning article that cites multivariate_data_analysis
+(listValue (filter (filter (getProperty (singleton article:tyar) (string type)) (string won_award)) (string cites) (string =) multivariate_data_analysis:ar))
+
+authors of articles published in annals_of_statistics
+(listValue (filter (getProperty (singleton person:type) (string type)) (reverse (string author)) (string =) (filter (getProperty (singleton article:tyar) (string type)) (string venue) (string =) annals_of_statistics:ve)))
+
+articles that cities articles by efron
+(listValue (filter (getProperty (singleton article:tyar) (string type)) (string cites) (string =) (filter (getProperty (singleton article:tyar) (string type)) (string author) (string =) efron:pe)))
+
+what articles are written by efron
+(listValue (filter (getProperty (singleton person:type) (string type)) (reverse (string author)) (string =) (filter (getProperty (singleton article:tyar) (string type)) (string author) (string =) efron:pe)))
+
+name a publication containing an article about multivariate_data_analysis
+(listValue (filter (getProperty (singleton venue:tyve) (string type)) (reverse (string venue)) (string =) (filter (getProperty (singleton article:tyar) (string type)) (reverse (string cites)) (string =) multivariate_data_analysis:ar)))
+
+who is the author of multivariate_data_analysis article
+(listValue (filter (getProperty (singleton person:type) (string type)) (reverse (string author)) (string =) multivariate_data_analysis:ar))
+
+what is a venue that is not multivariate_data_analysis related
+(listValue (filter (getProperty (singleton venue:tyve) (string type)) (reverse (string venue)) (string !=) multivariate_data_analysis:ar))
+
+what articles publication date is in 2004 and cites multivariate_data_analysis
+(listValue (filter (filter (getProperty (singleton article:tyar) (string type)) (string publication_date) (string =) (date 2004 -1 -1)) (string cites) (string =) multivariate_data_analysis:ar))
+
+articles published after multivariate_data_analysis
+(listValue (filter (getProperty (singleton article:tyar) (string type)) (ensureNumericProperty (string publication_date)) (string >) (ensureNumericEntity (getProperty multivariate_data_analysis:ar (string publication_date)))))
+
+article cited by multivariate_data_analysis and published in 2004
+(listValue (filter (filter (getProperty (singleton article:tyar) (string type)) (reverse (string cites)) (string =) multivariate_data_analysis:ar) (string publication_date) (string =) (date 2004 -1 -1)))
+
+article that cites article whose author is efron
+(listValue (filter (getProperty (singleton article:tyar) (string type)) (string cites) (string =) (filter (getProperty (singleton article:tyar) (string type)) (string author) (string =) efron:pe)))
+
+efron articles citing multivariate_data_analysis
+(listValue (filter (filter (getProperty (singleton article:tyar) (string type)) (string author) (string =) efron:pe) (string cites) (string =) multivariate_data_analysis:ar))
+
+find an article in either annals_of_statistics or computational_linguistics
+(listValue (filter (getProperty (singleton article:tyar) (string type)) (string venue) (string =) (concat annals_of_statistics:ve computational_linguistics:ve)))
+
+venue that won an award based on the article
+(listValue (filter (getProperty (singleton venue:tyve) (string type)) (reverse (string venue)) (string =) (filter (getProperty (singleton article:tyar) (string type)) (string won_award))))
+
+list articles on annals_of_statistics or computational_linguistics
+(listValue (concat annals_of_statistics:ve computational_linguistics:ve))
+
+venue of article that cites multivariate_data_analysis
+(listValue (filter (getProperty (singleton venue:tyve) (string type)) (reverse (string venue)) (string =) (filter (getProperty (singleton article:tyar) (string type)) (reverse (string cites)) (string =) multivariate_data_analysis:ar)))
+
+articles in the annals_of_statistics that cite multivariate_data_analysis
+(listValue (filter (filter (getProperty (singleton article:tyar) (string type)) (string cites) (string =) multivariate_data_analysis:ar) (string venue) (string =) annals_of_statistics:ve))
+
+what efron article is cited in multivariate_data_analysis
+(listValue (filter (filter (getProperty (singleton article:tyar) (string type)) (reverse (string cites)) (string =) multivariate_data_analysis:ar) (string author) (string =) efron:pe))
+
+article cited bymultivariate_data_analysis
+(listValue (filter (getProperty (singleton article:tyar) (string type)) (reverse (string cites)) (string =) multivariate_data_analysis:ar))
+
+articles by efron cited in multivariate_data_analysis
+(listValue (filter (filter (getProperty (singleton article:tyar) (string type)) (string author) (string =) efron:pe) (reverse (string cites)) (string =) multivariate_data_analysis:ar))
+
+articles that city multivariate_data_analysis articles
+(listValue (filter (getProperty (singleton article:tyar) (string type)) (string cites) (string =) (filter (getProperty (singleton article:tyar) (string type)) (reverse (string cites)) (string =) multivariate_data_analysis:ar)))
+
+articles on multivariate_data_analysis that won an award
+(listValue (filter (filter (getProperty (singleton article:tyar) (string type)) (reverse (string cites)) (string =) multivariate_data_analysis:ar) (string won_award)))
+
+what annals_of_statistics article cites multivariate_data_analysis
+(listValue (filter (filter (getProperty (singleton article:tyar) (string type)) (string cites) (string =) multivariate_data_analysis:ar) (string venue) (string =) annals_of_statistics:ve))
+
+what venue contains the article about city multivariate_data_analysis
+(listValue (filter (getProperty (singleton venue:tyve) (string type)) (reverse (string venue)) (string =) (filter (getProperty (singleton article:tyar) (string type)) (reverse (string cites)) (string =) multivariate_data_analysis:ar)))
+
+writer of multivariate_data_analysis
+(listValue (filter (filter (getProperty (singleton person:type) (string type)) (reverse (string author)) (string =) multivariate_data_analysis:ar) (reverse (string author)) (string =) multivariate_data_analysis:ar))
+
+who is the author of an article cited by multivariate_data_analysis
+(listValue (filter (getProperty (singleton person:type) (string type)) (reverse (string author)) (string =) (filter (getProperty (singleton article:tyar) (string type)) (reverse (string cites)) (string =) multivariate_data_analysis:ar)))
+
+which article won an award and has its venue as annals_of_statistics
+(listValue (filter (filter (getProperty (singleton article:tyar) (string type)) (string won_award)) (string venue) (string =) annals_of_statistics:ve))
+
+name an article about multivariate_data_analysis from the annals_of_statistics
+(listValue (filter (filter (getProperty (singleton article:tyar) (string type)) (string cites) (string =) multivariate_data_analysis:ar) (string venue) (string =) annals_of_statistics:ve))
+
+articles that cite multivariate_data_analysis
+(listValue (filter (getProperty (singleton article:tyar) (string type)) (string cites) (string =) (filter (getProperty (singleton article:tyar) (string type)) (string cites) (string =) multivariate_data_analysis:ar)))
+
 which meetings end later than 10 in the morning or 3 in the afternoon
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string >) (ensureNumericEntity (concat (time 10 0) (time 15 0)))))
+(listValue (filter (getProperty (singleton en.meeting) (string type)) (ensureNumericProperty (string end_time)) (string >) (ensureNumericEntity (concat (time 10 0) (time 15 0)))))
 
 important meeting with three hour duration
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string is_important)) (string length) (string =) (number 3 hour:ho)))
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string is_important)) (string length) (string =) (number 3 en.hour)))
 
 meeting that has duration of lesser than three hour
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string length)) (string <) (ensureNumericEntity (number 3 hour:ho))))
-
-meetings that start earlier than or at the same time as the weekly standup meeting
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string start_time)) (string <=) (ensureNumericEntity (getProperty weekly_standup:me (string end_time)))))
-
-show me the meetings that are scheduled for longest length of time
-(listValue (superlative (getProperty (singleton meeting:me) (string type)) (string max) (ensureNumericProperty (string length))))
+(listValue (filter (getProperty (singleton en.meeting) (string type)) (ensureNumericProperty (string length)) (string <) (ensureNumericEntity (number 3 en.hour))))
 
 what meeting is alice not attending
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (string attendee) (string !=) alice:pe))
+(listValue (filter (getProperty (singleton en.meeting) (string type)) (string attendee) (string !=) alice:pe))
 
 which january 2nd meeting is three hours long
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string date) (string =) (date 2015 1 2)) (string length) (string =) (number 3 hour:ho)))
-
-who has attended the most meetings
-(listValue (countSuperlative (getProperty (singleton person:pe) (string type)) (string max) (reverse (string attendee)) (getProperty (singleton meeting:me) (string type))))
-
-meeting is no later than january 2nd or 3rd
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string date)) (string >=) (ensureNumericEntity (concat (date 2015 1 2) (date 2015 1 3)))))
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string date) (string =) (date 2015 1 2)) (string length) (string =) (number 3 en.hour)))
 
 show me all three hour meetings that begin at 10am
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string length) (string =) (number 3 hour:ho)) (string start_time) (string =) (time 10 0)))
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string length) (string =) (number 3 en.hour)) (string start_time) (string =) (time 10 0)))
 
-meetings in greenberg cafe that start at 10am
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string start_time) (string =) (time 10 0)) (string location) (string =) greenberg_cafe:lo))
+meetings in greenberg_cafe that start at 10am
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string start_time) (string =) (time 10 0)) (string location) (string =) greenberg_cafe:lo))
 
 show me meetings on jan 2
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string date) (string =) (date 2015 1 2)) (string date) (string =) (date 2015 1 2)))
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string date) (string =) (date 2015 1 2)) (string date) (string =) (date 2015 1 2)))
 
-show me all meetings scheduled to be longer than the weekly standup meeting
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string length)) (string >) (ensureNumericEntity (getProperty weekly_standup:me (string length)))))
+show me all meetings scheduled to be longer than the weekly_standup meeting
+(listValue (filter (getProperty (singleton en.meeting) (string type)) (ensureNumericProperty (string length)) (string >) (ensureNumericEntity (getProperty weekly_standup:me (string length)))))
 
 meetings after january 2 or after january 3
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string date)) (string >) (ensureNumericEntity (concat (date 2015 1 2) (date 2015 1 3)))))
-
-meeting which is on jan 3 or before
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string date)) (string <=) (ensureNumericEntity (concat (date 2015 1 2) (date 2015 1 3)))))
-
-show me meetings shorter than three hours
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string length)) (string <=) (ensureNumericEntity (concat (number 3 hour:ho) (number 1 hour:ho)))))
-
-what meeting ends at 10am or earlier
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string <=) (ensureNumericEntity (time 10 0))))
+(listValue (filter (getProperty (singleton en.meeting) (string type)) (ensureNumericProperty (string date)) (string >) (ensureNumericEntity (concat (date 2015 1 2) (date 2015 1 3)))))
 
 show me all meetings marked important beginning at 10 am
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string is_important)) (string start_time) (string =) (time 10 0)))
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string is_important)) (string start_time) (string =) (time 10 0)))
 
-what is the longest meeting
-(listValue (superlative (getProperty (singleton meeting:me) (string type)) (string max) (ensureNumericProperty (string length))))
+what is the location of the weekly_standup
+(listValue (filter (getProperty (singleton en.location) (string type)) (reverse (string location)) (string =) weekly_standup:me))
 
-meetings that end at or before 10am or at or before 3pm
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string <=) (ensureNumericEntity (concat (time 10 0) (time 15 0)))))
+people that attend the weekly_standup meeting or the annual_review meeting
+(listValue (filter (getProperty (singleton person:type) (string type)) (reverse (string attendee)) (string =) (concat weekly_standup:me annual_review:me)))
 
-meetings that start at the same time or after the weekly standup meeting ends
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string start_time)) (string >=) (ensureNumericEntity (getProperty weekly_standup:me (string end_time)))))
+what meetings are located at greenberg_cafe
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string location) (string =) greenberg_cafe:lo) (string location) (string =) greenberg_cafe:lo))
 
-what is the location of the weekly standup
-(listValue (filter (getProperty (singleton location:lo) (string type)) (reverse (string location)) (string =) weekly_standup:me))
+meeting that starts when the weekly_standup meeting ends
+(listValue (filter (getProperty (singleton en.meeting) (string type)) (string start_time) (string =) (getProperty weekly_standup:me (string end_time))))
 
-people that attend the weekly standup meeting or the annual review meeting
-(listValue (filter (getProperty (singleton person:pe) (string type)) (reverse (string attendee)) (string =) (concat weekly_standup:me annual_review:me)))
-
-what meeting has the longest length
-(listValue (superlative (getProperty (singleton meeting:me) (string type)) (string max) (ensureNumericProperty (string length))))
-
-what meetings are located at greenberg cafe
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string location) (string =) greenberg_cafe:lo) (string location) (string =) greenberg_cafe:lo))
-
-meeting that starts when the weekly standup meeting ends
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (string start_time) (string =) (getProperty weekly_standup:me (string end_time))))
-
-meetings in greenberg cafe that end at 10am
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string location) (string =) greenberg_cafe:lo) (string end_time) (string =) (time 10 0)))
+meetings in greenberg_cafe that end at 10am
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string location) (string =) greenberg_cafe:lo) (string end_time) (string =) (time 10 0)))
 
 show me all meetings happening on january 2nd
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string date) (string =) (date 2015 1 2)) (string date) (string =) (date 2015 1 2)))
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string date) (string =) (date 2015 1 2)) (string date) (string =) (date 2015 1 2)))
 
 what meeting doesnt end at 10am
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (string end_time) (string !=) (time 10 0)))
-
-show me all meeting that will end by 10am
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string <=) (ensureNumericEntity (time 10 0))))
+(listValue (filter (getProperty (singleton en.meeting) (string type)) (string end_time) (string !=) (time 10 0)))
 
 meetings that start before 10am
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string start_time)) (string <) (ensureNumericEntity (time 10 0))))
+(listValue (filter (getProperty (singleton en.meeting) (string type)) (ensureNumericProperty (string start_time)) (string <) (ensureNumericEntity (time 10 0))))
 
-meeting starts before end time of weekly standup
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string start_time)) (string <) (ensureNumericEntity (getProperty weekly_standup:me (string end_time)))))
+meeting starts before end time of weekly_standup
+(listValue (filter (getProperty (singleton en.meeting) (string type)) (ensureNumericProperty (string start_time)) (string <) (ensureNumericEntity (getProperty weekly_standup:me (string end_time)))))
 
 three hour meeting on january 2nd
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string length) (string =) (number 3 hour:ho)) (string date) (string =) (date 2015 1 2)))
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string length) (string =) (number 3 en.hour)) (string date) (string =) (date 2015 1 2)))
 
 which people are attending meetings on january 2
-(listValue (filter (getProperty (singleton person:pe) (string type)) (reverse (string attendee)) (string =) (filter (getProperty (singleton meeting:me) (string type)) (string date) (string =) (date 2015 1 2))))
+(listValue (filter (getProperty (singleton person:type) (string type)) (reverse (string attendee)) (string =) (filter (getProperty (singleton en.meeting) (string type)) (string date) (string =) (date 2015 1 2))))
 
-meetings that start at or after 10am
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string start_time)) (string >=) (ensureNumericEntity (time 10 0))))
-
-location of more than two meetings
-(listValue (countComparative (getProperty (singleton location:lo) (string type)) (reverse (string location)) (string >) (number 2) (getProperty (singleton meeting:me) (string type))))
-
-show me all meetings in greenberg cafe on jan 2
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string date) (string =) (date 2015 1 2)) (string location) (string =) greenberg_cafe:lo))
+show me all meetings in greenberg_cafe on jan 2
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string date) (string =) (date 2015 1 2)) (string location) (string =) greenberg_cafe:lo))
 
 show me any meetings labeled as important which are also three hours long
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string is_important)) (string length) (string =) (number 3 hour:ho)))
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string is_important)) (string length) (string =) (number 3 en.hour)))
 
 show me all locations which have meetings ending at 10 am
-(listValue (filter (getProperty (singleton location:lo) (string type)) (reverse (string location)) (string =) (filter (getProperty (singleton meeting:me) (string type)) (string end_time) (string =) (time 10 0))))
-
-show me the meeting that has the latest end time
-(listValue (superlative (getProperty (singleton meeting:me) (string type)) (string max) (ensureNumericProperty (string end_time))))
+(listValue (filter (getProperty (singleton en.location) (string type)) (reverse (string location)) (string =) (filter (getProperty (singleton en.meeting) (string type)) (string end_time) (string =) (time 10 0))))
 
 who is attending the 10sm meeting
-(listValue (filter (getProperty (singleton person:pe) (string type)) (reverse (string attendee)) (string =) (filter (getProperty (singleton meeting:me) (string type)) (string start_time) (string =) (time 10 0))))
+(listValue (filter (getProperty (singleton person:type) (string type)) (reverse (string attendee)) (string =) (filter (getProperty (singleton en.meeting) (string type)) (string start_time) (string =) (time 10 0))))
 
 show me meetings ending after 10am
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string >) (ensureNumericEntity (time 10 0))))
+(listValue (filter (getProperty (singleton en.meeting) (string type)) (ensureNumericProperty (string end_time)) (string >) (ensureNumericEntity (time 10 0))))
 
 show me all meetings attended by alice beginning at 10 am
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string attendee) (string =) alice:pe) (string start_time) (string =) (time 10 0)))
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string attendee) (string =) alice:pe) (string start_time) (string =) (time 10 0)))
 
 what meeting has and end time the same as weekly startup
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (string end_time) (string =) (getProperty weekly_standup:me (string end_time))))
+(listValue (filter (getProperty (singleton en.meeting) (string type)) (string end_time) (string =) (getProperty weekly_standup:me (string end_time))))
 
-show me meetings that take three hours in greenberg cafe
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string length) (string =) (number 3 hour:ho)) (string location) (string =) greenberg_cafe:lo))
-
-which meeting has the fewest attendees
-(listValue (countSuperlative (getProperty (singleton meeting:me) (string type)) (string min) (string attendee)))
+show me meetings that take three hours in greenberg_cafe
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string length) (string =) (number 3 en.hour)) (string location) (string =) greenberg_cafe:lo))
 
 meeting ends before 10am or 3pm
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string <) (ensureNumericEntity (concat (time 10 0) (time 15 0)))))
+(listValue (filter (getProperty (singleton en.meeting) (string type)) (ensureNumericProperty (string end_time)) (string <) (ensureNumericEntity (concat (time 10 0) (time 15 0)))))
 
 meeting which starts at 1000 am or 300 pm
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (string start_time) (string =) (concat (time 10 0) (time 15 0))))
+(listValue (filter (getProperty (singleton en.meeting) (string type)) (string start_time) (string =) (concat (time 10 0) (time 15 0))))
 
-meetings attended by alice in greenberg cafe
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string location) (string =) greenberg_cafe:lo) (string attendee) (string =) alice:pe))
-
-show me meetings shorter than 3 hours
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string length)) (string <=) (ensureNumericEntity (number 3 hour:ho))))
+meetings attended by alice in greenberg_cafe
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string location) (string =) greenberg_cafe:lo) (string attendee) (string =) alice:pe))
 
 what location is the three hour meeting
-(listValue (filter (getProperty (singleton location:lo) (string type)) (reverse (string location)) (string =) (filter (getProperty (singleton meeting:me) (string type)) (string length) (string =) (number 3 hour:ho))))
+(listValue (filter (getProperty (singleton en.location) (string type)) (reverse (string location)) (string =) (filter (getProperty (singleton en.meeting) (string type)) (string length) (string =) (number 3 en.hour))))
 
 which january 2nd meetings is alice attenting
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string date) (string =) (date 2015 1 2)) (string attendee) (string =) alice:pe))
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string date) (string =) (date 2015 1 2)) (string attendee) (string =) alice:pe))
 
 show me all meetings that begin at 10am
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (string start_time) (string =) (time 10 0)))
+(listValue (filter (getProperty (singleton en.meeting) (string type)) (string start_time) (string =) (time 10 0)))
 
-find the meeting with alice at greenberg cafe
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string attendee) (string =) alice:pe) (string location) (string =) greenberg_cafe:lo))
-
-what meeting has a date of jan 2 or jan 3
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string date)) (string >=) (ensureNumericEntity (concat (date 2015 1 2) (date 2015 1 3)))))
+find the meeting with alice at greenberg_cafe
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string attendee) (string =) alice:pe) (string location) (string =) greenberg_cafe:lo))
 
 meeting ends at 10 am or 3 pm
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (string end_time) (string =) (concat (time 10 0) (time 15 0))))
+(listValue (filter (getProperty (singleton en.meeting) (string type)) (string end_time) (string =) (concat (time 10 0) (time 15 0))))
 
 show me all meetings marked important which are also attended by alice
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string is_important)) (string attendee) (string =) alice:pe))
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string is_important)) (string attendee) (string =) alice:pe))
 
-show me important meetings at greenberg cafe
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string location) (string =) greenberg_cafe:lo) (string is_important)))
+show me important meetings at greenberg_cafe
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string location) (string =) greenberg_cafe:lo) (string is_important)))
 
-what is the end time of weekly standup
+what is the end time of weekly_standup
 (listValue (getProperty weekly_standup:me (string end_time)))
 
-meeting with no more than 2 locations
-(listValue (countComparative (getProperty (singleton meeting:me) (string type)) (string location) (string <=) (number 2)))
+show me all meetings at greenberg_cafe ending at 10 am
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string location) (string =) greenberg_cafe:lo) (string end_time) (string =) (time 10 0)))
 
-meeting which starts at or before 10 am
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string start_time)) (string <=) (ensureNumericEntity (time 10 0))))
-
-show me all meetings at greenberg cafe ending at 10 am
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string location) (string =) greenberg_cafe:lo) (string end_time) (string =) (time 10 0)))
-
-what meeting is at greenberg cafe
-(listValue (filter (getProperty (singleton location:lo) (string type)) (reverse (string location)) (string =) (filter (getProperty (singleton meeting:me) (string type)) (string location) (string =) greenberg_cafe:lo)))
+what meeting is at greenberg_cafe
+(listValue (filter (getProperty (singleton en.location) (string type)) (reverse (string location)) (string =) (filter (getProperty (singleton en.meeting) (string type)) (string location) (string =) greenberg_cafe:lo)))
 
 location is same as the location of meeting on jan 2
-(listValue (filter (getProperty (singleton location:lo) (string type)) (reverse (string location)) (string =) (filter (getProperty (singleton meeting:me) (string type)) (string date) (string =) (date 2015 1 2))))
+(listValue (filter (getProperty (singleton en.location) (string type)) (reverse (string location)) (string =) (filter (getProperty (singleton en.meeting) (string type)) (string date) (string =) (date 2015 1 2))))
 
 what meetings are scheduled to run for three hours on jan 2
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string date) (string =) (date 2015 1 2)) (string length) (string =) (number 3 hour:ho)))
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string date) (string =) (date 2015 1 2)) (string length) (string =) (number 3 en.hour)))
 
 show me all important meetings on jan 2
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string date) (string =) (date 2015 1 2)) (string is_important)))
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string date) (string =) (date 2015 1 2)) (string is_important)))
 
-show me all meetings alice has attended at the greenberg cafe
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string attendee) (string =) alice:pe) (string location) (string =) greenberg_cafe:lo))
+show me all meetings alice has attended at the greenberg_cafe
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string attendee) (string =) alice:pe) (string location) (string =) greenberg_cafe:lo))
 
 show me all meetings after january 2nd
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string date)) (string >) (ensureNumericEntity (date 2015 1 2))))
-
-person attending least number of meetings
-(listValue (countSuperlative (getProperty (singleton person:pe) (string type)) (string min) (reverse (string attendee)) (getProperty (singleton meeting:me) (string type))))
-
-what meeting has the earliest date
-(listValue (superlative (getProperty (singleton meeting:me) (string type)) (string min) (ensureNumericProperty (string date))))
+(listValue (filter (getProperty (singleton en.meeting) (string type)) (ensureNumericProperty (string date)) (string >) (ensureNumericEntity (date 2015 1 2))))
 
 what meeting ends no earlier than 10am
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string <) (ensureNumericEntity (time 10 0))))
+(listValue (filter (getProperty (singleton en.meeting) (string type)) (ensureNumericProperty (string end_time)) (string <) (ensureNumericEntity (time 10 0))))
 
-what meetings occur on the same day as weekly standup
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (string date) (string =) (getProperty weekly_standup:me (string date))))
+what meetings occur on the same day as weekly_standup
+(listValue (filter (getProperty (singleton en.meeting) (string type)) (string date) (string =) (getProperty weekly_standup:me (string date))))
 
 what meetings take place in greenbug cafe
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string location) (string =) greenberg_cafe:lo) (string location) (string =) greenberg_cafe:lo))
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string location) (string =) greenberg_cafe:lo) (string location) (string =) greenberg_cafe:lo))
 
 what meeting has a length smaller than three hours
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string length)) (string <) (ensureNumericEntity (number 3 hour:ho))))
+(listValue (filter (getProperty (singleton en.meeting) (string type)) (ensureNumericProperty (string length)) (string <) (ensureNumericEntity (number 3 en.hour))))
 
-show me the meetings with the most attendees
-(listValue (countSuperlative (getProperty (singleton meeting:me) (string type)) (string max) (string attendee)))
-
-what meeting is starting the same time as weekly standup
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (string start_time) (string =) (getProperty weekly_standup:me (string start_time))))
+what meeting is starting the same time as weekly_standup
+(listValue (filter (getProperty (singleton en.meeting) (string type)) (string start_time) (string =) (getProperty weekly_standup:me (string start_time))))
 
 show me meetings starting at 10am that take 3 horus
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string start_time) (string =) (time 10 0)) (string length) (string =) (number 3 hour:ho)))
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string start_time) (string =) (time 10 0)) (string length) (string =) (number 3 en.hour)))
 
-location same as weekly meeting or annual review
-(listValue (filter (getProperty (singleton location:lo) (string type)) (reverse (string location)) (string =) (concat weekly_standup:me annual_review:me)))
+location same as weekly meeting or annual_review
+(listValue (filter (getProperty (singleton en.location) (string type)) (reverse (string location)) (string =) (concat weekly_standup:me annual_review:me)))
 
 meeting in which alice is attending and ends at 10 am
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string end_time) (string =) (time 10 0)) (string attendee) (string =) alice:pe))
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string end_time) (string =) (time 10 0)) (string attendee) (string =) alice:pe))
 
 what meeting start time is later than 10am
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string start_time)) (string >) (ensureNumericEntity (time 10 0))))
+(listValue (filter (getProperty (singleton en.meeting) (string type)) (ensureNumericProperty (string start_time)) (string >) (ensureNumericEntity (time 10 0))))
 
 meetings that are not attended by alice
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (string attendee) (string !=) alice:pe))
+(listValue (filter (getProperty (singleton en.meeting) (string type)) (string attendee) (string !=) alice:pe))
 
-what meeting has the fewest locations
-(listValue (countSuperlative (getProperty (singleton meeting:me) (string type)) (string min) (string location)))
+show me all meetings ending after the weekly_standup ends
+(listValue (filter (getProperty (singleton en.meeting) (string type)) (ensureNumericProperty (string start_time)) (string >) (ensureNumericEntity (getProperty weekly_standup:me (string end_time)))))
 
-show me all meetings ending after the weekly standup ends
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string start_time)) (string >) (ensureNumericEntity (getProperty weekly_standup:me (string end_time)))))
+what meeting is at greenberg_cafe and ends at 10am
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string location) (string =) greenberg_cafe:lo) (string end_time) (string =) (time 10 0)))
 
-what meeting is at greenberg cafe and ends at 10am
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string location) (string =) greenberg_cafe:lo) (string end_time) (string =) (time 10 0)))
-
-meeting is not at greenberg cafe
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (string location) (string !=) greenberg_cafe:lo))
+meeting is not at greenberg_cafe
+(listValue (filter (getProperty (singleton en.meeting) (string type)) (string location) (string !=) greenberg_cafe:lo))
 
 what meetings have a length of three hours and alice is attending
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string length) (string =) (number 3 hour:ho)) (string attendee) (string =) alice:pe))
-
-what meetings are scheduled for a date no earlier than jan 2
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string date)) (string >=) (ensureNumericEntity (date 2015 1 2))))
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string length) (string =) (number 3 en.hour)) (string attendee) (string =) alice:pe))
 
 locations of meetings that end at 10am
-(listValue (filter (getProperty (singleton location:lo) (string type)) (reverse (string location)) (string =) (filter (getProperty (singleton meeting:me) (string type)) (string end_time) (string =) (time 10 0))))
+(listValue (filter (getProperty (singleton en.location) (string type)) (reverse (string location)) (string =) (filter (getProperty (singleton en.meeting) (string type)) (string end_time) (string =) (time 10 0))))
 
-what meetings end no later then the weekly standup meeting ends
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string >=) (ensureNumericEntity (getProperty weekly_standup:me (string end_time)))))
+what meeting is in either greenberg cage or central_office
+(listValue (filter (getProperty (singleton en.meeting) (string type)) (string location) (string =) (concat greenberg_cafe:lo central_office:lo)))
 
-what meeting is in either greenberg cage or central office
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (string location) (string =) (concat greenberg_cafe:lo central_office:lo)))
-
-show me all meetings happening at greenberg cafe or central office
+show me all meetings happening at greenberg_cafe or central_office
 (listValue (concat greenberg_cafe:lo central_office:lo))
 
 what is the average length of all meetings
-(listValue (aggregate (string avg) (getProperty (getProperty (singleton meeting:me) (string type)) (string length))))
+(listValue (aggregate (string avg) (getProperty (getProperty (singleton en.meeting) (string type)) (string length))))
 
 who is attending the three hour meeting
-(listValue (filter (getProperty (singleton person:pe) (string type)) (reverse (string attendee)) (string =) (filter (getProperty (singleton meeting:me) (string type)) (string length) (string =) (number 3 hour:ho))))
+(listValue (filter (getProperty (singleton person:type) (string type)) (reverse (string attendee)) (string =) (filter (getProperty (singleton en.meeting) (string type)) (string length) (string =) (number 3 en.hour))))
 
 what are some important meetings
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (string is_important)))
-
-show me all meetings which start at the same time or later than the weekly standup
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string start_time)) (string >=) (ensureNumericEntity (getProperty weekly_standup:me (string start_time)))))
+(listValue (filter (getProperty (singleton en.meeting) (string type)) (string is_important)))
 
 meeting on jan 2 which ends at 10 am
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string date) (string =) (date 2015 1 2)) (string end_time) (string =) (time 10 0)))
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string date) (string =) (date 2015 1 2)) (string end_time) (string =) (time 10 0)))
 
 what meeting starts earlier than 10am or 3pm
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string start_time)) (string <) (ensureNumericEntity (concat (time 10 0) (time 15 0)))))
+(listValue (filter (getProperty (singleton en.meeting) (string type)) (ensureNumericProperty (string start_time)) (string <) (ensureNumericEntity (concat (time 10 0) (time 15 0)))))
 
-show me all meetings that end at 10am in greenberg cafe
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string location) (string =) greenberg_cafe:lo) (string end_time) (string =) (time 10 0)))
-
-tell me the all meetings begins after 10am or 3pm
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string start_time)) (string >=) (ensureNumericEntity (concat (time 10 0) (time 15 0)))))
+show me all meetings that end at 10am in greenberg_cafe
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string location) (string =) greenberg_cafe:lo) (string end_time) (string =) (time 10 0)))
 
 people that attend important meetings
-(listValue (filter (getProperty (singleton person:pe) (string type)) (reverse (string attendee)) (string =) (filter (getProperty (singleton meeting:me) (string type)) (string is_important))))
-
-how many locations house meetings
-(listValue (ccount (getProperty (singleton location:lo) (string type))))
+(listValue (filter (getProperty (singleton person:type) (string type)) (reverse (string attendee)) (string =) (filter (getProperty (singleton en.meeting) (string type)) (string is_important))))
 
 show me all meetings happening before january 2nd
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string date)) (string <) (ensureNumericEntity (date 2015 1 2))))
+(listValue (filter (getProperty (singleton en.meeting) (string type)) (ensureNumericProperty (string date)) (string <) (ensureNumericEntity (date 2015 1 2))))
 
-what is the date of weekly standup
+what is the date of weekly_standup
 (listValue (getProperty weekly_standup:me (string date)))
 
 create a meeting for jan 2nd until 10am
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string date) (string =) (date 2015 1 2)) (string end_time) (string =) (time 10 0)))
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string date) (string =) (date 2015 1 2)) (string end_time) (string =) (time 10 0)))
 
 what meeting is on jan 2
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string date) (string =) (date 2015 1 2)) (string date) (string =) (date 2015 1 2)))
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string date) (string =) (date 2015 1 2)) (string date) (string =) (date 2015 1 2)))
 
-show me important meetings at greenberg cafe
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string is_important)) (string location) (string =) greenberg_cafe:lo))
+show me important meetings at greenberg_cafe
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string is_important)) (string location) (string =) greenberg_cafe:lo))
 
-meeting starting at time of weekly standup
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (string start_time) (string =) (getProperty weekly_standup:me (string start_time))))
+meeting starting at time of weekly_standup
+(listValue (filter (getProperty (singleton en.meeting) (string type)) (string start_time) (string =) (getProperty weekly_standup:me (string start_time))))
 
-meetings held in the same location as the weekly standup meeting
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (string location) (string =) (getProperty weekly_standup:me (string location))))
+meetings held in the same location as the weekly_standup meeting
+(listValue (filter (getProperty (singleton en.meeting) (string type)) (string location) (string =) (getProperty weekly_standup:me (string location))))
 
 show me all meetings which are either shorter or longer than three hours
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (string length) (string !=) (number 3 hour:ho)))
+(listValue (filter (getProperty (singleton en.meeting) (string type)) (string length) (string !=) (number 3 en.hour)))
 
 what meeting lasts from one to three hours
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (string length) (string =) (concat (number 3 hour:ho) (number 1 hour:ho))))
+(listValue (filter (getProperty (singleton en.meeting) (string type)) (string length) (string =) (concat (number 3 en.hour) (number 1 en.hour))))
 
 what meeting has alice attending on jan 2
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string attendee) (string =) alice:pe) (string date) (string =) (date 2015 1 2)))
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string attendee) (string =) alice:pe) (string date) (string =) (date 2015 1 2)))
 
 show me all meetings alice has attended marked as important
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string attendee) (string =) alice:pe) (string is_important)))
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string attendee) (string =) alice:pe) (string is_important)))
 
 meetings that are longer than the weekly startup meeting
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string length)) (string >) (ensureNumericEntity (getProperty weekly_standup:me (string length)))))
+(listValue (filter (getProperty (singleton en.meeting) (string type)) (ensureNumericProperty (string length)) (string >) (ensureNumericEntity (getProperty weekly_standup:me (string length)))))
 
 show me the important meetings that last three hours
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string is_important)) (string length) (string =) (number 3 hour:ho)))
-
-what meeting begins latest
-(listValue (superlative (getProperty (singleton meeting:me) (string type)) (string max) (ensureNumericProperty (string start_time))))
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string is_important)) (string length) (string =) (number 3 en.hour)))
 
 show me all meetings marked important ending at 10 am
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string is_important)) (string end_time) (string =) (time 10 0)))
-
-what meeting ends at the same time as weekly standup or later
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string >=) (ensureNumericEntity (getProperty weekly_standup:me (string end_time)))))
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string is_important)) (string end_time) (string =) (time 10 0)))
 
 show me all meetings that alice is attending on jan 2
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string attendee) (string =) alice:pe) (string date) (string =) (date 2015 1 2)))
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string attendee) (string =) alice:pe) (string date) (string =) (date 2015 1 2)))
 
-what meeting ends at the start time of weekly standup
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (string end_time) (string =) (getProperty weekly_standup:me (string start_time))))
-
-meetings held in less than two locations
-(listValue (countComparative (getProperty (singleton meeting:me) (string type)) (string location) (string <) (number 2)))
+what meeting ends at the start time of weekly_standup
+(listValue (filter (getProperty (singleton en.meeting) (string type)) (string end_time) (string =) (getProperty weekly_standup:me (string start_time))))
 
 what important meeting has an end time of 10am
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string end_time) (string =) (time 10 0)) (string is_important)))
-
-meetings that are on or before january 3
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string date)) (string >=) (ensureNumericEntity (concat (date 2015 1 2) (date 2015 1 3)))))
-
-what meeting has the same end time as that of weekly standup
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string <=) (ensureNumericEntity (getProperty weekly_standup:me (string end_time)))))
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string end_time) (string =) (time 10 0)) (string is_important)))
 
 show me meetings before 10am
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string <) (ensureNumericEntity (time 10 0))))
-
-what meeting has the most attendees
-(listValue (countSuperlative (getProperty (singleton meeting:me) (string type)) (string max) (string attendee)))
+(listValue (filter (getProperty (singleton en.meeting) (string type)) (ensureNumericProperty (string end_time)) (string <) (ensureNumericEntity (time 10 0))))
 
 show me all meetings that run either three hours or one hour
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (string length) (string =) (concat (number 3 hour:ho) (number 1 hour:ho))))
+(listValue (filter (getProperty (singleton en.meeting) (string type)) (string length) (string =) (concat (number 3 en.hour) (number 1 en.hour))))
 
 show me the meeting that starts and ends at 10 am
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string start_time) (string =) (time 10 0)) (string end_time) (string =) (time 10 0)))
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string start_time) (string =) (time 10 0)) (string end_time) (string =) (time 10 0)))
 
 show me all meetings that end earlier than the week standup meeting ends
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string <) (ensureNumericEntity (getProperty weekly_standup:me (string end_time)))))
-
-which meeting has the most people scheduled to attend
-(listValue (countSuperlative (getProperty (singleton meeting:me) (string type)) (string max) (string attendee)))
+(listValue (filter (getProperty (singleton en.meeting) (string type)) (ensureNumericProperty (string end_time)) (string <) (ensureNumericEntity (getProperty weekly_standup:me (string end_time)))))
 
 what person is attending a meeting that ends at 10am
-(listValue (filter (getProperty (singleton person:pe) (string type)) (reverse (string attendee)) (string =) (filter (getProperty (singleton meeting:me) (string type)) (string end_time) (string =) (time 10 0))))
+(listValue (filter (getProperty (singleton person:type) (string type)) (reverse (string attendee)) (string =) (filter (getProperty (singleton en.meeting) (string type)) (string end_time) (string =) (time 10 0))))
 
 meetings on january 2 or january 3
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (string date) (string =) (concat (date 2015 1 2) (date 2015 1 3))))
+(listValue (filter (getProperty (singleton en.meeting) (string type)) (string date) (string =) (concat (date 2015 1 2) (date 2015 1 3))))
 
 show me meetings that take 3 hours and start at 10am
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string length) (string =) (number 3 hour:ho)) (string start_time) (string =) (time 10 0)))
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string length) (string =) (number 3 en.hour)) (string start_time) (string =) (time 10 0)))
 
 alice or bob is an attendee at the meeting
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (string attendee) (string =) (concat alice:pe bob:pe)))
+(listValue (filter (getProperty (singleton en.meeting) (string type)) (string attendee) (string =) (concat alice:pe bob:pe)))
 
-show me all meetings which are scheduled no later than january 3
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string date)) (string <=) (ensureNumericEntity (concat (date 2015 1 2) (date 2015 1 3)))))
-
-who attends the weekly standup meeting
+who attends the weekly_standup meeting
 (listValue (getProperty weekly_standup:me (string attendee)))
-
-show me all meetings starting at 10 am or after
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string start_time)) (string >=) (ensureNumericEntity (time 10 0))))
 
 meetings that end later than 10am
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string >) (ensureNumericEntity (time 10 0))))
+(listValue (filter (getProperty (singleton en.meeting) (string type)) (ensureNumericProperty (string end_time)) (string >) (ensureNumericEntity (time 10 0))))
 
-show me all meetings which have only one location
-(listValue (countComparative (getProperty (singleton meeting:me) (string type)) (string location) (string <) (number 2)))
-
-who has attended the weekly standup meeting
+who has attended the weekly_standup meeting
 (listValue (getProperty weekly_standup:me (string attendee)))
 
-who are the people attending at least two different meetings
-(listValue (countComparative (getProperty (singleton person:pe) (string type)) (reverse (string attendee)) (string >=) (number 2) (getProperty (singleton meeting:me) (string type))))
-
-what meeting who starts right right after weekly standup
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string start_time)) (string >=) (ensureNumericEntity (getProperty weekly_standup:me (string end_time)))))
-
-show me all meetings that have two or fewer attendees
-(listValue (countComparative (getProperty (singleton meeting:me) (string type)) (string attendee) (string <=) (number 2)))
-
 what meeting ends before 3pm or 10am
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string <) (ensureNumericEntity (concat (time 10 0) (time 15 0)))))
-
-what meetings have no more than two different locations
-(listValue (countComparative (getProperty (singleton meeting:me) (string type)) (string location) (string <=) (number 2)))
+(listValue (filter (getProperty (singleton en.meeting) (string type)) (ensureNumericProperty (string end_time)) (string <) (ensureNumericEntity (concat (time 10 0) (time 15 0)))))
 
 meetings that are longer than three hours or longer than an hour
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string length)) (string >) (ensureNumericEntity (concat (number 3 hour:ho) (number 1 hour:ho)))))
-
-show me all the meetings that have two or more participants
-(listValue (countComparative (getProperty (singleton meeting:me) (string type)) (string attendee) (string >=) (number 2)))
+(listValue (filter (getProperty (singleton en.meeting) (string type)) (ensureNumericProperty (string length)) (string >) (ensureNumericEntity (concat (number 3 en.hour) (number 1 en.hour)))))
 
 show me all meetings beginning at 10 am which are three hours long
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string start_time) (string =) (time 10 0)) (string length) (string =) (number 3 hour:ho)))
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string start_time) (string =) (time 10 0)) (string length) (string =) (number 3 en.hour)))
 
-meeting with fewest locations
-(listValue (countSuperlative (getProperty (singleton meeting:me) (string type)) (string min) (string location)))
+what three hour meeting is at greenberg_cafe
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string location) (string =) greenberg_cafe:lo) (string length) (string =) (number 3 en.hour)))
 
-what three hour meeting is at greenberg cafe
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string location) (string =) greenberg_cafe:lo) (string length) (string =) (number 3 hour:ho)))
-
-show me all attendees of the weekly standup meeting
-(listValue (filter (getProperty (singleton person:pe) (string type)) (reverse (string attendee)) (string =) weekly_standup:me))
+show me all attendees of the weekly_standup meeting
+(listValue (filter (getProperty (singleton person:type) (string type)) (reverse (string attendee)) (string =) weekly_standup:me))
 
 show me all meetings on january 2nd which are three hours long
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string date) (string =) (date 2015 1 2)) (string length) (string =) (number 3 hour:ho)))
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string date) (string =) (date 2015 1 2)) (string length) (string =) (number 3 en.hour)))
 
 which important meeting starts at 10 in the morning
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string start_time) (string =) (time 10 0)) (string is_important)))
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string start_time) (string =) (time 10 0)) (string is_important)))
 
-show me all meetings which end at the same time or later than the weekly standup meeting begins
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string >=) (ensureNumericEntity (getProperty weekly_standup:me (string start_time)))))
-
-show me meeting happening after the day of weekly standup
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string date)) (string >) (ensureNumericEntity (getProperty weekly_standup:me (string date)))))
-
-find me a meeting that ends 10am or later
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string >=) (ensureNumericEntity (time 10 0))))
+show me meeting happening after the day of weekly_standup
+(listValue (filter (getProperty (singleton en.meeting) (string type)) (ensureNumericProperty (string date)) (string >) (ensureNumericEntity (getProperty weekly_standup:me (string date)))))
 
 what meeting starts at 10am and ends at 10am q
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string start_time) (string =) (time 10 0)) (string end_time) (string =) (time 10 0)))
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string start_time) (string =) (time 10 0)) (string end_time) (string =) (time 10 0)))
 
-what meeting was on or before jan 2
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string date)) (string <=) (ensureNumericEntity (date 2015 1 2))))
-
-who is the person attending more than two meetings
-(listValue (countComparative (getProperty (singleton person:pe) (string type)) (reverse (string attendee)) (string >) (number 2) (getProperty (singleton meeting:me) (string type))))
-
-meeting at greenberg cafe ends at 1000 am
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string location) (string =) greenberg_cafe:lo) (string end_time) (string =) (time 10 0)))
-
-show me all meetings ending at or after 10 am
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string end_time)) (string >=) (ensureNumericEntity (time 10 0))))
+meeting at greenberg_cafe ends at 1000 am
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string location) (string =) greenberg_cafe:lo) (string end_time) (string =) (time 10 0)))
 
 what important meeting has a start time at 10am
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string start_time) (string =) (time 10 0)) (string is_important)))
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string start_time) (string =) (time 10 0)) (string is_important)))
 
 show me all meetings with alice
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (string attendee) (string =) alice:pe))
-
-show me meetings after the weekly standup day
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string date)) (string >=) (ensureNumericEntity (getProperty weekly_standup:me (string date)))))
+(listValue (filter (getProperty (singleton en.meeting) (string type)) (string attendee) (string =) alice:pe))
 
 location of meetings that start at 10am
-(listValue (filter (getProperty (singleton location:lo) (string type)) (reverse (string location)) (string =) (filter (getProperty (singleton meeting:me) (string type)) (string start_time) (string =) (time 10 0))))
+(listValue (filter (getProperty (singleton en.location) (string type)) (reverse (string location)) (string =) (filter (getProperty (singleton en.meeting) (string type)) (string start_time) (string =) (time 10 0))))
 
 what meeting has length shorter than one to three hours
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string length)) (string <) (ensureNumericEntity (concat (number 3 hour:ho) (number 1 hour:ho)))))
-
-what meeting has less than two locations
-(listValue (countComparative (getProperty (singleton meeting:me) (string type)) (string location) (string <) (number 2)))
+(listValue (filter (getProperty (singleton en.meeting) (string type)) (ensureNumericProperty (string length)) (string <) (ensureNumericEntity (concat (number 3 en.hour) (number 1 en.hour)))))
 
 what meeting has a date earlier than weekly startup
-(listValue (filter (getProperty (singleton meeting:me) (string type)) (ensureNumericProperty (string date)) (string <) (ensureNumericEntity (getProperty weekly_standup:me (string date)))))
+(listValue (filter (getProperty (singleton en.meeting) (string type)) (ensureNumericProperty (string date)) (string <) (ensureNumericEntity (getProperty weekly_standup:me (string date)))))
 
 show me all three hour meetings that alice is attending
-(listValue (filter (filter (getProperty (singleton meeting:me) (string type)) (string attendee) (string =) alice:pe) (string length) (string =) (number 3 hour:ho)))
+(listValue (filter (filter (getProperty (singleton en.meeting) (string type)) (string attendee) (string =) alice:pe) (string length) (string =) (number 3 en.hour)))
 

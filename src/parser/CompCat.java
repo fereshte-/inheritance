@@ -150,6 +150,7 @@ public class CompCat extends Cat {
 	//>
 
 	public Cat apply(Cat input){
+	//	System.out.println(this + "\n compCat\n" + input);
 		if (input==null || input.sem==null || sem==null){
 			return null;
 		}

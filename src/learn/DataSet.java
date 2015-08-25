@@ -64,7 +64,7 @@ public class DataSet {
 
 						e = Exp.makeExp(s);
 						System.out.println(":::eeee::::   " + e);
-						e.simplify();
+						e=e.simplify(new LinkedList<Var>());
 						if (e==null || !e.wellTyped()){
 							System.err.println("ERROR: Mistyped Exp in DataSet at"+
 									" example # "+count+

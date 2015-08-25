@@ -1,19 +1,19 @@
 /***************************  LICENSE  *******************************
-* This file is part of UBL.
-* 
-* UBL is free software: you can redistribute it and/or modify
-* it under the terms of the GNU Lesser General Public License as 
-* published by the Free Software Foundation, either version 3 of the 
-* License, or (at your option) any later version.
-* 
-* UBL is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU Lesser General Public License for more details.
-*
-* You should have received a copy of the GNU Lesser General Public 
-* License along with UBL.  If not, see <http://www.gnu.org/licenses/>.
-***********************************************************************/
+ * This file is part of UBL.
+ * 
+ * UBL is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the 
+ * License, or (at your option) any later version.
+ * 
+ * UBL is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public 
+ * License along with UBL.  If not, see <http://www.gnu.org/licenses/>.
+ ***********************************************************************/
 
 
 
@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.util.*;
 
 import lambda.Exp;
+import lambda.Lit;
 import learn.*;
 
 /**
@@ -33,25 +34,62 @@ import learn.*;
  **/
 public class LexiconFeatSet implements LexicalFeatureSet {
 
+	public static boolean share = true;
+	
 	public void setFeats(LexEntry l, HashVector feats){
 		int i = indexOf(l);
+		double sc = 0.5;
 		if (i!=-1){
-			if (feats.get("LEX:"+i)>100) 
+			if (feats.get("LEX:"+i)>200) 
 				System.out.println("LARGE LEX feats: "+l);
-			feats.set("LEX:"+i,feats.get("LEX:"+i)+1.0);
+			feats.set("LEX:"+i,feats.get("LEX:"+i)+sc);
+		}
+		sc*=0.5;
+		if(
+				share && 
+				l!=null){
+			LexEntry lp = l.getParent();
+			
+			while(lp!=null){
+				i = indexOf(lp);
+				if(i!=-1){
+					if (feats.get("LEXP:"+i)>200) 
+						System.out.println("LARGE LEX feats: "+l);
+					feats.set("LEXP:"+i,feats.get("LEXP:"+i)+ sc);
+				}
+				lp = lp.getParent();
+				sc = sc * 0.5;
+			}
+
 		}
 	}
 
+
 	public double score(LexEntry l, HashVector theta){
+
 		if (l==null) return 0.0;
+		
+		double score = 0;
+		double sc = 0.25;
+		if(share && l.getCat().getSem() != null){
+			LexEntry lp = l.getParent();
+			while(lp!=null){
+				int i= indexOf(lp);
+				if (i!=-1) 
+					score = sc * theta.get("LEXP:"+i);
+				lp=lp.getParent();
+				sc = sc * 0.5;
+			}
+		}
+		sc = 0.5;
 		int i= indexOf(l);
 		if (i!=-1) 
-			return theta.get("LEX:"+i);
+			return score + sc * theta.get("LEX:"+i);
 		if (l.getCat().equalsNoSem(Cat.EMP))
-			return -1.0;
+			return score + -1.0;
 		if (Train.CoocInit)
-			return initialWeight(l);
-		return -0.5;  // unknown. 
+			return score + sc * initialWeight(l);
+		return score + -0.5;  // unknown. 
 	}
 
 
@@ -63,21 +101,49 @@ public class LexiconFeatSet implements LexicalFeatureSet {
 		offset = index;
 	}
 
+
 	public void addLexEntry(LexEntry l, HashVector theta){
+		double sc = 0.5;
 		if (!lexItems.containsKey(l)){
 			int i = lexItems.size();
 			lexItems.put(l.copy(),i);
-
 			if (Train.CoocInit){
-				theta.set("LEX:"+i,initialWeight(l));
+				theta.set("LEX:"+i,sc * initialWeight(l));
 
 			} else {
 				theta.set("LEX:"+i,-0.1);
 			}
+
+
+			LexEntry lp = l.getParent();
+			sc *= 0.5;
+			while (share && lp!=null){
+				if(!lexItems.containsKey(lp)){
+
+					i = lexItems.size(); 
+					lexItems.put(lp.copy(),i);	
+					if (Train.CoocInit){
+						theta.set("LEXP:"+i,sc * initialWeight(l));
+
+					} else {
+						theta.set("LEXP:"+i,-0.1);
+					}
+				}else{
+					i=indexOf(lp);
+					if (Train.CoocInit){
+						theta.set("LEXP:"+i, theta.get("LEXP:"+i) + sc * initialWeight(l));
+
+					} else {
+						theta.set("LEXP:"+i,Math.max(theta.get("LEXP:"+i), -0.1));
+					}
+				}
+				lp = lp.getParent();
+				sc = sc * 0.5;
+			}
 		}
 	}
 
-	
+
 	//< constructors
 
 	public LexiconFeatSet(){
@@ -133,7 +199,7 @@ public class LexiconFeatSet implements LexicalFeatureSet {
 			lexItems.put(l,new Integer(lexItems.size()));
 	}
 
-	/**
+	/**ßß
 	 * load co-occurence counts from file
 	 */
 	public static void loadCoOccCounts(String filename){
@@ -157,10 +223,10 @@ public class LexiconFeatSet implements LexicalFeatureSet {
 		lexScores = new HashMap<String,Double>();
 		lexScores.putAll(pmis);
 	}
-	
-    public static double initialWeight(LexEntry le){
-        return initWeightMultiplier*score_wc(le.getTokens(),le.getCat());                                                                
-    }
+
+	public static double initialWeight(LexEntry le){
+		return initWeightMultiplier*score_wc(le.getTokens(),le.getCat());                                                                
+	}
 
 
 
@@ -239,10 +305,10 @@ public class LexiconFeatSet implements LexicalFeatureSet {
 
 	// this is the weight by which the co-occurence 
 	// statistics get multiplied.
-    public static double initWeightMultiplier = 10.0;
+	public static double initWeightMultiplier = 10.0;
 
-    // this is the initial weight assigned to lexical
-    // items that are loaded before training
+	// this is the initial weight assigned to lexical
+	// items that are loaded before training
 	static public double initLexWeight = 10.0;
 
 	static Map<String,Integer> pairCounts;

@@ -24,18 +24,25 @@ import java.util.*;
 
 public class Const extends Exp{
 
+	public boolean isNumber(String s) {  
+		if(s==null) return false;
+	    return s.matches("[-+]?\\d*\\.?\\d+");  
+	}  
+	
 	public Const(String n){
 		int colon = n.indexOf(':');
 		if (colon==-1){
 			//System.err.println("WARNING: null type const "+n); 
-			if(Lang.hasPred(name)){
-				List<Pred> l = Lang.predsWithName(name);
-				if(l.size() == 1)
-					t = l.get(0).type();
-				else
+			if(Lang.hasPred(n)){
+//				List<Pred> l = Lang.predsWithName(n);
+//				if(l.size() == 1)
+//					t = l.get(0).type();
+//				else
 					t=new PType("e");
+			}else if(isNumber(n)){
+				t= new PType("num");
 			}else
-				t = new PType("e");//null;
+				t=new PType("e");
 			name = n;
 		} else {
 			name = n.substring(0,colon);
@@ -47,7 +54,18 @@ public class Const extends Exp{
 			System.err.println("WARNING: \\ and . found in const.");
 		}
 	}
+	
+	@Override
+	public String change(List varNames){
+		if(!t.toString().equals("e"))
+			return name+":"+t;
+		return name;
 
+	}
+
+	public List<Exp> getExp(){
+		return null;
+	}
 	public Const(){
 		name = "##con"+String.valueOf(uniqueID++);
 	}
@@ -66,18 +84,12 @@ public class Const extends Exp{
 	}
 
 	public String toString(List varNames){
+//		if(Exp.parentVersion && t!=null)
+//			return "const";
 		if (t==null)
 			return name;
 		else
 			return name+":"+t;
-	}
-	
-	@Override
-	public String change(List varNames){
-		if(!t.toString().equals("e"))
-			return name+":"+t;
-		return name;
-
 	}
 
 	public String toSlotsString(boolean outer){
@@ -242,4 +254,9 @@ public class Const extends Exp{
 	String name;
 	Type t;
 	static int uniqueID = 0;
+	@Override
+	public String getParent() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -1,79 +1,127 @@
 (
-(singleton e e)
-(filter e e e e e)
-(filter e e e)
-(countComparative e e e e e)
-(countComparative e e e e e e)
+((singleton e e))
+((filter e e e e e))
+((filter e e e))
+((countComparative e e e e e))
+((countComparative e e e e e e))
 
-(countSuperlative e e e e )
-(countSuperlative e e e e e)
+((countSuperlative e e e e ))
+((countSuperlative e e e e e))
 
-(getProperty e e e)
-(superlative e e e e)
-(ensureNumericProperty e e)
-(ensureNumericEntity e e)
-(listValue e e)
-(string e e)
-(aggregate e e e)
-(reverse e e)
-
-
-(concat me me me)
-(concat pe pe pe)
-(concat lo lo lo)
-(concat i i i)
+((getProperty e e e))
+((superlative e e e e))
+((ensureNumericProperty e e))
+((ensureNumericEntity e e))
+((listValue e e))
+((string e e))
+((aggregate e e e))
+((reverse e e))
+((var e e))
 
 
-
-(ccount e i)
-(avg i i)
-(number i i)
-(number i e i)
-(date i i i da)
-(var e e)
-(time i i ti)
-(sum i i)
-
-
-(max e i e)
-(min e i e)
-(< i i obj)
-(> i i obj)
-(>= i i obj)
-(<= i i obj)
-
-(!= me me obj)
-(!= lo lo obj)
-(!= pe pe obj)
-(!= i i obj)
-
-
-(= me me obj)
-(= lo lo obj)
-(= pe pe obj)
-(= i i obj)
+((time num num ti))
+((date num num num da))
 
 
 
+((concat me me me))
+((concat pe pe pe))
+((concat lo lo lo))
+((concat i i i))
 
-(is_important me me) 
-(type lo lo)
-(type me me)
-(type pe pe)
-(type ho ho)
 
-(start_time me ti)
-(start_time_2 ti me)
-(end_time_2 ti me)
-(end_time me ti)
 
-(attendee me pe)
-(attendee_2 pe me)
+((ccount obj i))
+((avg i i))
+((number num num))
+((number num tyho num))
+((sum i i))
+((jan num da))
+((hour num ho))
 
-(location me lo)
-(location_2 lo me)
-(length me i)
-(length_2 i me)
-(date me da)
-(date_2 da me)
+
+((max obj i obj))
+((min obj i obj))
+((< i i obj))
+((> i i obj))
+((>= i i obj))
+((<= i i obj))
+
+((!= me me obj))
+((!= lo lo obj))
+((!= pe pe obj))
+((!= i i obj))
+
+
+((= me me obj))
+((= lo lo obj))
+((= pe pe obj))
+((= i i obj))
+
+
+
+((vp obj obj))
+((is_important me me) vp) 
+((type tylo lo))
+((type type pe))
+((type tyme me))
+((type tyho ho))
+
+((relNp4_time me ti))
+((relNp4_time_2 ti me))
+((start_time me ti) relNp4_time)
+((start_time_2 ti me) relNp4_time_2)
+((end_time_2 ti me) relNp4_time)
+((end_time me ti) relNp4_time_2)
+
+((relNp2_person obj obj))
+((relNp2_person_2 obj obj))
+((attendee me pe) relNp2_person)
+((attendee_2 pe me) relNp2_person_2)
+
+((relNp3_loc obj obj))
+((relNp3_loc_2 obj obj))
+
+((location me lo) relNp3_loc)
+((location_2 lo me) relNp3_loc_2)
+((length me ho))
+((length_2 ho me))
+
+((relNp1_date obj i))
+((relNp1_date_2 i obj))
+((date me da) relNp1_date)
+((date_2 da me) relNp1_date_2)
+
+
+//publication
+
+
+((author ar pe) relNp2_person)
+((author_2 pe ar) relNp2_person_2)
+((venue ar ve) relNp3_loc)
+((venue_2 ve ar) relNp3_loc_2)
+
+
+((publication_date ar da) relNp1_date)
+((publication_date_2 da ar) relNp1_date_2)
+((cites ar ar))
+((cites_2 ar ar))
+((won_award ar ar) vp)
+
+((type tyar ar))
+((type type pe))
+((type tyve ve))
+
+
+((!= ve ve obj))
+((!= ar ar obj))
+((!= pe pe obj))
+((!= i i obj))
+
+
+((= ve ve obj))
+((= ar ar obj))
+((= pe pe obj))
+((= i i obj))
+
 )

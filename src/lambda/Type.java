@@ -50,6 +50,7 @@ public abstract class Type {
 	abstract public boolean subType(Type t);
 	abstract public int numCommas();
 	abstract public Type commonSuperType(Type t);
+	abstract public Type commonSubType(Type t);
 
 	abstract public Cat makeCat();
 	abstract public List<Cat> makeAllCats();

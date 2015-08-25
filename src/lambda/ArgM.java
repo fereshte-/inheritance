@@ -21,8 +21,11 @@
 package lambda;
 
 import utils.*;
+
 import java.io.*;
 import java.util.*;
+
+import com.google.common.collect.ArrayListMultimap;
 
 
 public class ArgM extends Exp {
@@ -43,6 +46,14 @@ public class ArgM extends Exp {
 		set = Exp.makeExp(lr.next(),vars);
 		body = Exp.makeExp(lr.next(),vars);
 		vars.remove(argname);
+		
+		addToNameMap(Arrays.asList(set,body));
+	
+	}
+	
+	public List<Exp> getExp(){
+		return Arrays.asList(set, body);
+
 	}
 
 	public ArgM(int m, Exp a, Exp b, Exp c){
@@ -185,6 +196,8 @@ public class ArgM extends Exp {
 		} else {
 			result="(argmax ";
 		}
+//		if(Exp.parentVersion)
+//			result="(Argm ";
 		result += arg.toString(varNames)+" "
 		+set.toString(varNames)+" "
 		+body.toString(varNames)+")";
@@ -463,8 +476,17 @@ public class ArgM extends Exp {
 	public static int MIN=1;
 
 	int mtype; // min or max
+	
+	public Exp getBody(){
+		return body;
+	}
 
 	Var arg;
 	Exp set;
 	Exp body;
+
+	@Override
+	public String getParent() {
+		return "ArgM";
+	}
 }

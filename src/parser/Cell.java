@@ -20,6 +20,7 @@
 package parser;
 
 import java.util.*;
+
 import learn.*;
 
 public class Cell implements Comparable<Cell> {
@@ -61,6 +62,7 @@ public class Cell implements Comparable<Cell> {
 	}
 
 	public Cell(Cat c, int b, int e, List cList, LexEntry l){
+
 		myCat = c;
 		begin = b;
 		end = e;
@@ -76,6 +78,7 @@ public class Cell implements Comparable<Cell> {
 		for (LexicalFeatureSet lfs : Globals.lexicalFeatures){
 			score+=lfs.score(l,Globals.theta);
 		}
+		
 		score+=computeParseFeaturesScore(null);
 		inside = Math.exp(score);
 		maxscore = score;	
@@ -85,6 +88,9 @@ public class Cell implements Comparable<Cell> {
 		typeRaisedFrom = null;
 		//cells = new LinkedList();
 		//cells.add(this);
+		
+	//	System.out.println("##########\n" + c.getSem() + " " + maxscore);
+	
 	}
 
 	public Cell(Cat c, int b, int e, List cList, String rule){

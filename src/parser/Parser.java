@@ -21,6 +21,7 @@ package parser;
 
 import java.util.*;
 import java.io.*;
+
 import learn.*;
 import lambda.*;
 
@@ -118,16 +119,43 @@ public class Parser {
 				}
 			}
 		}
+		
+		
+//		System.out.println("fffffffffffffffff");
+//		for(ParseResult pr : chart.getParseResults()){
+//			System.out.println(pr + "#" + pr.getScore());
+//		}
+//		System.out.println("fffffffffffffffff");
 
 		chart.pruneParseResults(pruneN);
-
 		// store the parse results
 		allParses = chart.getParseResults();
+
 		allParses = removeRepeats(allParses);
 
+	
+		
 		// find best parses for test and for generating
 		// new lexical items.
+		
+
 		bestParses = findBestParses(allParses);
+		
+		
+		
+//		System.out.println("&&&&&&&&&&&&&&&&&&&&&");
+//		System.out.println(input + " " + pruningSem);
+//		for (int len = size-1; len>=0; len--){
+//			for (int begin = 0; begin<size-len; begin++){
+//				Iterator i = chart.getCellsIterator(begin,begin+len);		
+//				while (i.hasNext()){
+//					Cell c = (Cell)i.next();
+//					System.out.println("len = " + len + " begin = " + begin + "\n" + c.lex);
+//				}
+//			}
+//		}
+//		System.out.println("&&&&&&&&&&&&&&&&&&&&&");
+
 		return chart;
 	}
 
@@ -220,7 +248,7 @@ public class Parser {
 	}
 
 	private List<ParseResult> removeRepeats(List<ParseResult> all){
-		System.out.println("========================" + all.size() +"===========================");
+		System.out.println("----------------------- all.size equals to --------------" + all.size());
 		List<ParseResult> bestList = new LinkedList<ParseResult>();
 		for (int i=0; i<all.size(); i++){
 			ParseResult e_i = all.get(i);

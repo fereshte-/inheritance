@@ -21,8 +21,12 @@
 package lambda;
 
 import java.util.*;
+
 import utils.*;
+
 import java.io.*;
+
+import com.google.common.collect.ArrayListMultimap;
 
 /*
  * right now only conjoins two things.  i should do a 
@@ -49,6 +53,12 @@ public class Equals extends Exp {
 		if (!wellTyped()){
 			System.out.println("MISTYPED in Equals.java: "+this);
 		}
+		
+		addToNameMap(Arrays.asList(left, right));
+	}
+	
+	public List<Exp> getExp(){
+		return Arrays.asList(left, right);
 	}
 
 	public Exp simplify(List<Var> vars){

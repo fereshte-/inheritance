@@ -20,6 +20,7 @@
 package parser;
 
 import java.util.*;
+
 import lambda.*;
 
 public class Chart {
@@ -51,7 +52,8 @@ public class Chart {
 	/**
 	 * add cell c to chart 
 	 */
-	public void add(Cell c){     
+	public void add(Cell c){   
+		
 
 		// first of all, check if the semantics of c is allowed
 		if (prune(c)){
@@ -438,6 +440,7 @@ public class Chart {
 				}
 			}
 		}
+
 		return result;
 	}
 
@@ -466,6 +469,7 @@ public class Chart {
 
 
 	private double splitMerge(Cell c, int begin, int end, List<LexEntry> maxEntries, double mostImproved){
+
 		// try all possible splits and take the one with the great score increase
 		//System.out.println("splitMerge: "+c+" b:"+begin+" e:"+end);
 		//List<Cell> betterEntries = new LinkedList<Cell>();
@@ -483,10 +487,9 @@ public class Chart {
 				// make parse cells for the new lexical entries
 				LexEntry leftLex = new LexEntry(rootTokens.subList(0,(sp-begin)+1),left);
 				LexEntry rightLex = new LexEntry(rootTokens.subList((sp-begin)+1,rootTokens.size()),right);
-
 				Cell leftCell = new Cell(left,begin,sp,null,leftLex);
 				Cell rightCell = new Cell(right,sp+1,end,null,rightLex);
-
+			
 				// but, use an existing cell instead of the lexical one if it 
 				// has a higher max score
 				Cell temp = getCell(leftCell);
@@ -507,7 +510,7 @@ public class Chart {
 				children.add(leftCell);
 				children.add(rightCell);
 				Cell r = new Cell(rootCat,begin,end,children);
-				//System.out.println("SPLIT: "+leftLex+" --- "+rightLex+" = "+r.maxscore());
+			//	System.out.println("SPLIT: "+leftLex+" --- "+rightLex+" = "+r.maxscore());
 				// if the score is higher, save the lexical entries
 				double improvement = r.maxscore()-origScore;
 				if (improvement>=maxImprove){
@@ -515,10 +518,12 @@ public class Chart {
 						maxEntries.clear();
 						maxImprove = improvement;
 					}
+		
 					if (leftCell.lexIsMax)
 						maxEntries.add(leftCell.getLexEntry());
 					if (rightCell.lexIsMax)
 						maxEntries.add(rightCell.getLexEntry());
+		
 				}
 			}
 		}
@@ -952,8 +957,11 @@ public class Chart {
 	public double computeNorm(Exp e){
 		double norm = 0.0;
 		for (Cell c : fullparses()){
-			if (e==null || c.getCat().getSem().equals(e))
+			if (e==null || c.getCat().getSem().equals(e)){
 				norm+=c.inside();
+//				System.out.println("\n=======c===========\n" + c + 
+//						"\n========inside==========\n" + c.inside + "\n");
+			}
 		}
 		return norm;
 	}

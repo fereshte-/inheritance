@@ -48,6 +48,20 @@ public class PercyToTom {
 			utterence = utterence.replace("?", " ");
 			utterence = utterence.replace("-", " ");
 			utterence = utterence.replace("'s", " 's");
+			utterence = utterence.replace("weekly standup", "weekly_standup");
+			utterence = utterence.replace("annual review", "annual_review");
+			utterence = utterence.replace("greenberg cafe", "greenberg_cafe");
+			utterence = utterence.replace("central office", "central_office");
+			
+			utterence = utterence.replace("multivariate data analysis",
+					"multivariate_data_analysis");
+			utterence = utterence.replace("annals of statistics", "annals_of_statistics");
+			utterence = utterence.replace("computational linguistics", "computational_linguistics");
+
+
+			
+			
+// calandar
 			
 			formula = formula.replace("en.meeting.weekly_standup", "weekly_standup:me");
 			formula = formula.replace("en.meeting.annual_review", "annual_review:me");
@@ -56,13 +70,44 @@ public class PercyToTom {
 			formula = formula.replace("en.person.alice", "alice:pe");
 			formula = formula.replace("en.person.bob", "bob:pe");
 
-			formula = formula.replace("en.hour", "hour:ho");
-			formula = formula.replace("en.person", "person:pe");
-			formula = formula.replace("en.meeting", "meeting:me");
-			formula = formula.replace("en.location", "location:lo");
+
+			formula = formula.replace("en.hour ", "hour:tyho ");
+			formula = formula.replace("en.person ", "person:type ");
+			formula = formula.replace("en.meeting ", "meeting:tyme ");
+			formula = formula.replace("en.location ", "location:tylo ");
+
+//publication
 			
+			formula = formula.replace("en.article.multivariate_data_analysis",
+					"multivariate_data_analysis:ar");
+			formula = formula.replace("en.venue.annals_of_statistics",
+					"annals_of_statistics:ve");
+			formula = formula.replace("en.venue.computational_linguistics",
+					"computational_linguistics:ve");
+			formula = formula.replace("en.person.efron", "efron:pe");
+			formula = formula.replace("en.person.lakoff", "lakoff:pe");
+
+
+			formula = formula.replace("en.article", "article:tyar");
+			formula = formula.replace("en.person", "person:type");
+			formula = formula.replace("en.venue", "venue:tyve");
 			
-			out.println(utterence + "\n" + formula + "\n\n" + original + "\n" + formula + "\n");
+		//	formula = formula.replace("concat", "or");
+
+			if(
+					formula.contains("<=") || formula.contains(">=") ||
+					formula.contains("countS") || formula.contains("countC") 
+					|| formula.contains("min") || formula.contains("max")
+					|| formula.contains("count")
+					) continue;
+			
+			if(outName.contains("test")){
+				out.println(utterence + "\n" + formula + "\n");
+			}else{
+				out.println(utterence + "\n" + formula + "\n");
+		//		out.println(original + "\n" + formula + "\n");
+			}
+		//	out.println(original + "\n" + formula + "\n");
 
 		}
 		out.close();
@@ -71,10 +116,10 @@ public class PercyToTom {
 	
 	public static void main(String[] args) throws IOException {
 		PercyToTom percyToTom = new PercyToTom();
-		percyToTom.percy_toGeo("/Users/fereshte/Desktop/course/research/ubl/ubl_percy/data/real_data_train.txt",
-				"/Users/fereshte/Desktop/course/research/ubl/ubl_percy/data/train.txt");
-		percyToTom.percy_toGeo("/Users/fereshte/Desktop/course/research/ubl/ubl_percy/data/real_data_test.txt",
-				"/Users/fereshte/Desktop/course/research/ubl/ubl_percy/data/test.txt");
+		percyToTom.percy_toGeo("./data/real_train_both.txt",
+				"./data/train.txt");
+		percyToTom.percy_toGeo("./data/real_test_both.txt",
+				"./data/test.txt");
 
 	}
 }

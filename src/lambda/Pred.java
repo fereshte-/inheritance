@@ -26,15 +26,16 @@ import java.io.*;
 
 public class Pred {
 
-	public Pred(String input){
+	public Pred(String input, String parent){
 		typeSigs = new LinkedList<List<Type>>();
-		addTuple(input);
+		addTuple(input, parent);
 	}
 
-	public void addTuple(String input){
+	public void addTuple(String input, String parent){
 		LispReader lr = new LispReader(new StringReader(input));	
 
 		name = lr.next();
+		this.parent = parent;
 		List<Type> argsList = new LinkedList<Type>();
 		while (lr.hasNext()){
 			argsList.add(Type.makeType(lr.next()));
@@ -61,6 +62,10 @@ public class Pred {
 
 	public String getName(){
 		return name;
+	}
+	
+	public String getParent(){
+		return parent;
 	}
 
 	public Type retType(List<Type> inputs){
@@ -218,6 +223,7 @@ public class Pred {
 	String name;
 	List<List<Type>> typeSigs = new LinkedList<List<Type>>();
 	Type rtype;   // the return type
+	String parent;
 
 	//Type[] types;  // the argument types
 

@@ -3,8 +3,8 @@
 
 echo `rm run.test`;
 
-set p = 5;
-while ($p <= 5)
+set p = 10;
+while ($p <= 10)
 echo "portion is $p";
 
 set classpath="../../src:.";
@@ -24,7 +24,7 @@ echo `cp test.txt  data/geosents280-typed.ccg.test`;
 echo "train and test has changed";
 
 
-echo `java -server -Xmx1500m -classpath $classpath generateTest/ChangeFormat data/geosents600-typed.ccg.dev`;
+echo `java -server -Xmx1500m -classpath $classpath generateTest/ChangeFormat real_train.txt`;
 
 echo "format has changed for GIZA++";
 

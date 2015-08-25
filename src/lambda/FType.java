@@ -136,6 +136,9 @@ public class FType extends Type {
 	public Type commonSuperType(Type t){
 		return null;  //TODO: implement this...
 	}
+	public Type commonSubType(Type t){
+		return null;  //TODO: implement this...
+	}
 
 	Type domain;
 	Type range;

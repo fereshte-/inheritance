@@ -115,8 +115,8 @@ public class BoolBoolOps extends Exp {
 		List exps2 = new LinkedList();
 		for (int i=0; i<exps.size(); i++){
 			exps.set(i,((Exp)exps.get(i)).simplify(vars));
-			if(exps.get(i) instanceof BoolBoolOps){
-				BoolBoolOps e= (BoolBoolOps) exps.get(i);
+			if(exps.get(i) instanceof BoolBoolOps && exps.get(i).getHeadString().equals(this.getHeadPairs())){
+				BoolBoolOps e= (BoolBoolOps) exps.get(i).simplify(vars);
 				exps2.addAll(e.exps);
 			}else
 				exps2.add(exps.get(i));
@@ -241,13 +241,13 @@ public class BoolBoolOps extends Exp {
 	public void removeDuplicates(){
 		for (int i=0; i<exps.size(); i++){
 			for (int j=0; j<exps.size(); j++){
-				if (i!=j){
-					if (exps.get(i).equals(exps.get(j))){
+				if ((i!=j && exps.get(i).equals(exps.get(j)) || 
+						exps.get(i).getHeadString().trim().equals("type"))){
 						exps.remove(i);
 						i--;
 						j = exps.size();
-					}
 				}
+				
 			}
 		}
 	}
@@ -379,6 +379,7 @@ public class BoolBoolOps extends Exp {
 	public boolean equals(Object o){
 		if (o instanceof BoolBoolOps){
 			BoolBoolOps c = (BoolBoolOps)o;
+			
 			return op_type==c.op_type 
 					&& exps.size()==c.exps.size()
 					&& exps.containsAll(c.exps) 
@@ -441,7 +442,10 @@ public class BoolBoolOps extends Exp {
 					return null;
 				}
 			}
-			inferedType = e.inferedType;
+			if(inferedType == null)
+				inferedType = e.inferedType;
+			else
+				inferedType = inferedType.commonSubType(e.inferedType);
 			prev = e;
 		}
 		return inferedType;
@@ -804,6 +808,7 @@ public class BoolBoolOps extends Exp {
 		return result;
 	}
 
+	
 	public double avgDepth(int d){
 		double total = 0.0;
 		for (Exp e : exps)
@@ -818,6 +823,11 @@ public class BoolBoolOps extends Exp {
 	public static int CONJ = 0;
 	public static int DISJ = 1;
 	public static int IMPL = 2;
+
+	@Override
+	public List<Exp> getExp() {
+		return exps;
+	}
 
 
 }

@@ -21,6 +21,7 @@ package learn;
 
 import java.util.*;
 import java.io.*;
+
 import lambda.*;
 import parser.*;
 
@@ -50,8 +51,7 @@ public class Train {
 		if (parses.size()==1){
 			ParseResult p = parses.get(0);
 			Exp e = p.getExp();
-			e = e.copy();
-			e.simplify();
+			if(e!=null) e = e.simplify(new LinkedList<Var>());
 			List l = p.getLexEntries();
 			parsed++;
 			if (e.equals(sem)){
@@ -120,7 +120,7 @@ public class Train {
 						List l = p.getLexEntries();
 						Exp e = p.getExp();
 						e = e.copy();
-						e.simplify();
+						if(e!=null) e=e.simplify(new LinkedList<Var>());
 						int noEmpty = p.noEmpty();
 						if (e.equals(sem)){
 							if (verbose){
@@ -347,6 +347,12 @@ public class Train {
 							System.out.println(" (epoch:"+j+" file:"+l+" "+filename+")");
 						} else System.out.println(i+": ===========");
 					}
+//					System.out.println("%%%%%%%%%%%%%%%%%%%%");
+//					parser.printLexiconWithWeights();
+//					System.out.println("%%%%%%%%%%%%%%%%%%%%");
+//					Globals.theta.printValues(Globals.theta);
+//					System.out.println("%%%%%%%%%%%%%%%%%%%%");
+
 
 					// get the training example
 					words = data.sent(i);	    
@@ -387,7 +393,7 @@ public class Train {
 
 					Chart firstChart = parser.getChart();
 					Exp best = parser.bestSem();
-					
+					if(best!=null) best = best.simplify(new LinkedList<Var>());
 					// this just collates and outputs the training 
 					// accuracy.
 					if (sem.equals(best)){ 
@@ -421,15 +427,22 @@ public class Train {
 					// under the distribution that is conditioned 
 					// on the sentence alone.
 					double norm = firstChart.computeNorm();
+					System.out.println("first norm is " + norm);
 					HashVector update = new HashVector();
+			//		double lambda = 0.01 * norm;
+
 					HashVector firstfeats=null, secondfeats=null;
-					if (norm!=0.0){
+					if (norm != 0){
 						firstfeats = firstChart.computeExpFeatVals();
-						firstfeats.divideBy(norm);
+						firstfeats.divideBy(norm);// + lambda);
 						firstfeats.dropSmallEntries();
 						firstfeats.addTimesInto(-1.0,update);
 					} else continue;
 					firstChart=null;
+					
+//					System.out.println("^^^^^^   first feats  ^^^^^^");
+//					firstfeats.printValues(firstfeats);
+//					System.out.println("^^^^^^   first feats  ^^^^^^");
 
 					
 					if (verbose) mes = "Second";
@@ -443,7 +456,8 @@ public class Train {
 					if (!hasCorrect) continue;
 					Chart secondChart = parser.getChart();
 					double secnorm = secondChart.computeNorm(sem);
-					if (norm!=0.0){
+					System.out.println("sec norm is " + secnorm);
+					if (secnorm != 0){
 						secondfeats = secondChart.computeExpFeatVals(sem);
 						secondfeats.divideBy(secnorm);
 						secondfeats.dropSmallEntries();
@@ -458,6 +472,14 @@ public class Train {
 							}
 						}
 					} else continue;
+					
+//					double gamma = 0.001;
+//					Globals.theta.addTimesInto(-gamma, update);
+					
+//					System.out.println("^^^^^    second feats    ^^^^^^");
+//					secondfeats.printValues(firstfeats);
+//					System.out.println("^^^^^    second feats    ^^^^^^");
+
 
 					// now do the update
 					double scale = alpha_0/(1.0+c*numUpdates);

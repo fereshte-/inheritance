@@ -1,19 +1,19 @@
 /***************************  LICENSE  *******************************
-* This file is part of UBL.
-* 
-* UBL is free software: you can redistribute it and/or modify
-* it under the terms of the GNU Lesser General Public License as 
-* published by the Free Software Foundation, either version 3 of the 
-* License, or (at your option) any later version.
-* 
-* UBL is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU Lesser General Public License for more details.
-*
-* You should have received a copy of the GNU Lesser General Public 
-* License along with UBL.  If not, see <http://www.gnu.org/licenses/>.
-***********************************************************************/
+ * This file is part of UBL.
+ * 
+ * UBL is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of the 
+ * License, or (at your option) any later version.
+ * 
+ * UBL is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public 
+ * License along with UBL.  If not, see <http://www.gnu.org/licenses/>.
+ ***********************************************************************/
 
 
 
@@ -21,6 +21,7 @@ package parser;
 
 import java.util.*;
 import java.io.*;
+
 import lambda.*;
 
 /**
@@ -148,6 +149,17 @@ public class Lexicon {
 			return;
 		//System.out.println("Added: "+l);
 		lexicon.add(l);
+
+		LexEntry lp = l.getParent();
+		if(LexiconFeatSet.share){
+			while(lp!=null){
+				if( !lexicon.contains(lp)){
+					lexicon.add(lp);
+				}
+				lp = lp.getParent();
+			}
+
+		}
 	}
 	/**
 	 * addLexEntries adds all the entries in List<LexEntry> l to the lexicon.
@@ -218,7 +230,9 @@ public class Lexicon {
 			LexEntry le = (LexEntry) j.next();
 			int index = Globals.lexPhi.indexOf(le);
 			System.out.print(le);
-			if (index!=-1) System.out.print(" # "+Globals.theta.get("LEX:"+index));
+			if (index!=-1) 
+				System.out.print(" " + index + " # "+Math.max(Globals.theta.get("LEX:"+index),
+						Globals.theta.get("LEXP:"+index)));
 
 			System.out.println();
 		}
@@ -253,13 +267,70 @@ public class Lexicon {
 	 */    
 	public void getLexEntries(List words, List entries){
 		Iterator i = lexicon.iterator();
+		List<LexEntry> entries3 = new ArrayList<LexEntry>();
 		while (i.hasNext()){
+
 			LexEntry e = (LexEntry)i.next();
-			if (e.hasWords(words))
+			if (e.hasWords(words)){
 				entries.add(e);
+
+				LexEntry ep = e.getParent();
+				while(LexiconFeatSet.share && ep!=null){
+					List<LexEntry> entries2 = new ArrayList<LexEntry>();
+					getLexEntries(ep.getTokens(), entries2);
+					List<Exp> result = new ArrayList<Exp>();
+					e.getCat().getSem().allLits(-1, result);
+					change(entries2, e.getTokens(), ep.getTokens().get(0), result.get(0).getHeadString());
+					for(LexEntry entry : entries2)
+						if(!entries3.contains(entry))
+							entries3.add(entry);
+					ep = ep.getParent();
+				}
+
+			}
 		}
+		for(LexEntry entry : entries3)
+			if(!entries.contains(entry))
+				entries.add(entry);
+
+		for(LexEntry entry : ((List<LexEntry>) entries)){
+			LexEntry le = entry;
+			int index = Globals.lexPhi.indexOf(le);
+			//			System.out.print(le);
+			double lexscore = 0;
+			for (LexicalFeatureSet lfs : Globals.lexicalFeatures){
+				lexscore+=lfs.score(le,Globals.theta);
+			}
+			//			System.out.print(" # "+lexscore);
+
+			//			System.out.println();		
+		}
+
 	}
 
+	public String change(Exp sem, String what, String to){
+		Exp.changeVersion = true;
+		Exp.what = what;
+		Exp.to = to;
+		String result = sem.toString();
+		Exp.changeVersion = false;
+		return result;
+
+	}
+	public void change(List<LexEntry> entries, List<String> tokens, String what, String to){
+		List<LexEntry> entries2 = new ArrayList<LexEntry>();
+		for(LexEntry entry: entries){
+			LexEntry entry2 = entry.copy();
+
+			entry2.myCat = entry2.getCat().copy();
+
+			entry2.getCat().sem = Exp.makeExp(change(entry2.getCat().getSem(), what, to));//entry2.getCat().getSem().change(what , to);
+			entry2.myTokens = tokens;
+			entries2.add(entry2);
+		}
+		entries.clear();
+		entries.addAll(entries2);
+	}
 	public List<LexEntry> getLexEntries(List<String> words){
 		List<LexEntry> entries = new LinkedList();
 		int numWords = words.size();

@@ -20,7 +20,9 @@
 package lambda;
 
 import java.util.*;
+
 import utils.*;
+
 import java.io.*;
 
 public class Lang {
@@ -33,6 +35,18 @@ public class Lang {
 				return true;
 		}
 		return false;
+	}
+	
+	public static List predsWithName(String name){
+		List ret = new LinkedList();
+		Iterator i = preds.iterator();
+		while (i.hasNext()){
+			Pred p = (Pred)i.next();
+			if (p.name.equals(name)){
+				ret.add(p);
+			}
+		}
+		return ret;
 	}
 
 	//< functions for getting predicates defined in this language
@@ -76,18 +90,6 @@ public class Lang {
 		}
 		return ret;
 	}
-	
-	public static List predsWithName(String name){
-		List ret = new LinkedList();
-		Iterator i = preds.iterator();
-		while (i.hasNext()){
-			Pred p = (Pred)i.next();
-			if (p.name.equals(name)){
-				ret.add(p);
-			}
-		}
-		return ret;
-	}
 	public static List allPreds(){
 		return preds;
 	}
@@ -98,7 +100,10 @@ public class Lang {
 
 		LispReader lr = new LispReader(new StringReader(input));
 		while (lr.hasNext()){
-			String pred = lr.next();
+			String wholePred = lr.next();
+			LispReader lrwp = new LispReader(new StringReader(wholePred));
+			
+			String pred = lrwp.next();
 			LispReader lrp = new LispReader(new StringReader(pred));
 			int arity = 0;
 			String name = lrp.next();
@@ -109,13 +114,16 @@ public class Lang {
 			}
 			arity--;
 			//System.err.println("ARITY: "+arity);
+			String parent = null;
+			if(lrwp.hasNext()) 
+				parent = lrwp.next();
 
 			Pred p = getPred(name,arity);
 			if (p==null) {
-				preds.add(new Pred(pred));
+				preds.add(new Pred(pred, parent));
 			} else {
 				//System.err.println("HERE: "+p);
-				p.addTuple(pred);
+				p.addTuple(pred, parent);
 			}
 		}
 	}

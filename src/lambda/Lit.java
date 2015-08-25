@@ -21,8 +21,12 @@
 package lambda;
 
 import java.util.*;
+
 import utils.*;
+
 import java.io.*;
+
+import com.google.common.collect.ArrayListMultimap;
 
 /*
  * A lambda calc literal has a name, an arity, 
@@ -34,8 +38,6 @@ import java.io.*;
 
 public class Lit extends Exp {
 
-
-
 	public Lit(String input, Map vars){
 		LispReader lr = new LispReader(new StringReader(input));	
 		String predName = lr.next();
@@ -43,15 +45,165 @@ public class Lit extends Exp {
 		while (lr.hasNext()){
 			argsList.add(Exp.makeExp(lr.next(),vars));
 		}
+
 		args = new Exp[argsList.size()];
 		for (int i=0; i<args.length; i++){
 			args[i]=(Exp)argsList.get(i);
+
 		}
 		pred = Lang.getPred(predName,args.length);
 		if (pred==null){
 			System.out.println("Lit: couldn't parse: "+input);
 			System.exit(-1);
 		}
+
+		addToNameMap(Arrays.asList(args));
+		//		System.err.println(this + "\n\n\n" + pred + " "+ pred.type() + " " + type());
+	}
+
+	private String reverse(String s){
+		if(s.contains("_2"))
+			return s.replace("_2", "");
+		else
+			return s+"_2";
+	}
+
+	@Override
+	public String change(List varNames){
+		return change(varNames, null);
+	}
+
+	public String change(List varNames, String st){
+		StringBuffer result = new StringBuffer();
+		String name = pred.getName().trim();
+		if(name.equals("singleton") || name.equals("listValue") || name.equals("string") ||
+				name.equals("ensureNumericEntity") || name.equals("ensureNumericProperty")){
+			for (int i=0; i<args.length; i++){
+				if (args[i]!=null)
+					result.append(" ").append(args[i].change(varNames));
+				else 
+					result.append(" ").append("null");
+			}
+		}else if(name.equals("getProperty")){
+			if(st==null){
+				result.append("(").append(args[1].change(varNames));
+				result.append(" ").append(args[0].change(varNames));
+				result.append(")");
+			}else{
+				Lit l = (Lit)args[0];
+				result.append("(").append(((Const)l.args[0]).name+":t");
+				result.append(" " + st);
+				result.append(")");
+			}
+		}else if(name.equals("superlative")){
+			result.append("(").append(args[1].change(varNames).trim());
+
+			result.append(" ").append(args[0].change(varNames));
+			result.append(" ").append(args[2].change(varNames));
+			result.append(")");
+		}else if(name.equals("reverse")){
+			result.append(args[0].change(varNames)+"_2");
+		}else if(name.equals("filter")){
+			if (args.length == 4){
+				if(args[2].change(varNames).trim().equals("=")){
+					result.append("(and ");
+					result.append(args[0].change(varNames));
+					result.append(" (").append(reverse(args[1].change(varNames)));
+					result.append(" ").append(args[3].change(varNames));
+					result.append(")");
+
+					result.append(")");
+				}else{
+					result.append("(").append(args[2].change(varNames));
+					result.append(" (").append(args[1].change(varNames));
+					result.append(" ").append(args[0].change(varNames));
+					result.append(")");
+
+					result.append(" ").append(args[3].change(varNames));
+
+					result.append(")");
+				}
+			}else if(args.length == 2){
+				if(args[1].change(varNames).contains("won"))
+						result.append("(and ").append(args[1].change(varNames)+":ar");
+				else
+					result.append("(and ").append(args[1].change(varNames)+":me");
+
+				result.append(" ").append(args[0].change(varNames));
+				result.append(")");
+			}else{
+				System.err.println("that is weird!");
+			}
+
+		}else if(name.equals("aggregate")){
+			result.append("(").append(args[0].change(varNames));
+			result.append(" ").append(args[1].change(varNames));
+			result.append(")");
+		}else if(name.equals("countComparative")){
+			result.append(" (lambda $0 e ").append(" (and "+((Lit)args[0]).change(varNames, " $0"));
+			result.append(" (").append(args[2].change(varNames));
+			result.append(" (ccount (").append(args[1].change(varNames) + " $0))");
+			result.append(" ").append(args[3].change(varNames));
+			result.append("))");
+
+		}else if(name.equals("countSuperlative")){
+			//	if(args.length == 4){
+			result.append("(").append("arg" + args[1].change(varNames).trim() + " $0");
+			result.append(" ").append(args[0].change(varNames, "$0"));
+			result.append(" (ccount");
+			result.append(" (").append(args[2].change(varNames)).append(" $0)");
+			result.append(")");
+			result.append(")");
+			//			}else{
+			//
+			//			}
+		}else if(name.equals("time")){
+			result.append(((Const)args[0]).name+":ti");
+		}else if(name.equals("date") && args.length == 3){
+			if(args[1].getHeadString().contains("jan")){
+				result.append("(jan ");
+				result.append(args[2]);
+				result.append(")");
+			}else{
+				result.append(((Const)args[0]).name+":da");
+			}
+		}else if(name.equals("number") && args.length == 2){
+			result.append("(hour ");
+			result.append(args[0]);
+			result.append(")");
+		}else if(name.equals("number")){
+			result.append(((Const)args[0]).name+":num");
+		}else if(name.equals("concat")){
+			result.append("(").append("or");
+			for (int i=0; i<args.length; i++){
+				if (args[i]!=null)
+					result.append(" ").append(args[i].change(varNames));
+				else 
+					result.append(" ").append("null");
+			}
+			result.append(")");
+		}else{
+			result.append("(").append(pred.getName());
+			for (int i=0; i<args.length; i++){
+				if (args[i]!=null)
+					result.append(" ").append(args[i].change(varNames));
+				else 
+					result.append(" ").append("null");
+			}
+			result.append(")");
+		}
+		return result.toString();
+	}
+
+	public List<Exp> getExp(){
+		return Arrays.asList(args);
+	}
+
+
+
+	@Override
+	public String getParent() {
+		return getPred().getParent();
 	}
 
 	public Lit(Pred p, Exp e){
@@ -155,15 +307,22 @@ public class Lit extends Exp {
 			Lit l = (Lit) o;
 			if (!pred.equals(l.pred)) return false;
 			if (args.length!=l.args.length) return false;
-			for (int i=0; i<args.length; i++){
-				if (args[i]==null) {
-					return l.args[i]==null;
+			if(getHeadString().equals("=") || getHeadString().equals("!=")){
+				if(args.length!=2)	return false;
+				return (args[0].equals(l.args[0]) && args[1].equals(l.args[1])) ||
+						(args[0].equals(l.args[1]) && args[1].equals(l.args[0]));
+			}else{
+				for (int i=0; i<args.length; i++){
+					if (args[i]==null) {
+						return l.args[i]==null;
+					}
+					if (!args[i].equals(l.args[i]))
+						return false;
 				}
-				if (!args[i].equals(l.args[i]))
-					return false;
+				return true;
 			}
-			return true;
-		} else return false;
+		} else 
+			return false;
 	}
 
 	public boolean equals(int type, Exp o){
@@ -212,8 +371,17 @@ public class Lit extends Exp {
 	}
 
 	public String toString(List varNames){
+		//	System.out.println("we are in tostring " + what + " " + to + " " + pred.getName() + " " + Exp.changeVersion);
+
 		StringBuffer result = new StringBuffer();
-		result.append("(").append(pred.getName());
+		if(Exp.parentVersion && pred.getParent()!=null){
+			result.append("(").append(pred.getParent());
+		}else if(Exp.changeVersion && pred.getName().equals(what)){
+			//	System.out.println("we are in change " + what + " " + to);
+			result.append("(").append(to);
+		}else{
+			result.append("(").append(pred.getName());
+		}
 		for (int i=0; i<args.length; i++){
 			if (args[i]!=null)
 				result.append(" ").append(args[i].toString(varNames));
@@ -224,101 +392,7 @@ public class Lit extends Exp {
 		return result.toString();
 	}
 
-	private String reverse(String s){
-		if(s.contains("_2"))
-			return s.replace("_2", "");
-		else
-			return s+"_2";
-	}
 
-	@Override
-	public String change(List varNames){
-		StringBuffer result = new StringBuffer();
-		String name = pred.getName();
-		if(name.equals("singleton") || name.equals("listValue") || name.equals("string") ||
-				name.equals("ensureNumericEntity") || name.equals("ensureNumericProperty")){
-			for (int i=0; i<args.length; i++){
-				if (args[i]!=null)
-					result.append(" ").append(args[i].change(varNames));
-				else 
-					result.append(" ").append("null");
-			}
-		}else if(name.equals("getProperty")){
-			result.append("(").append(args[1].change(varNames));
-			result.append(" ").append(args[0].change(varNames));
-			result.append(")");
-		}else if(name.equals("superlative")){
-			result.append("(").append(args[1].change(varNames));
-			result.append(" ").append(args[0].change(varNames));
-			result.append(" ").append(args[2].change(varNames));
-			result.append(")");
-		}else if(name.equals("reverse")){
-			result.append(args[0].change(varNames)+"_2");
-		}else if(name.equals("filter")){
-			if (args.length == 4){
-				System.out.println("!!!!!!!!!!!!!!!!!!!"+args[2] + "!!!!!!!!"+args[2].change(varNames));
-				if(args[2].change(varNames).trim().equals("=")){
-					result.append("(and ");
-					result.append(args[0].change(varNames));
-					result.append(" (").append(reverse(args[1].change(varNames)));
-					result.append(" ").append(args[3].change(varNames));
-					result.append(")");
-					
-					result.append(")");
-				}else{
-					result.append("(").append(args[2].change(varNames));
-					result.append(" (").append(args[1].change(varNames));
-					result.append(" ").append(args[0].change(varNames));
-					result.append(")");
-
-					result.append(" ").append(args[3].change(varNames));
-
-					result.append(")");
-				}
-			}else if(args.length == 2){
-				result.append(" (").append(args[1].change(varNames));
-				result.append(" ").append(args[0].change(varNames));
-				result.append(")");
-			}else{
-				System.err.println("that is weird!");
-			}
-
-		}else if(name.equals("aggregate")){
-			result.append("(").append(args[0].change(varNames));
-			result.append(" ").append(args[1].change(varNames));
-			result.append(")");
-		}else if(name.equals("countComparative")){
-			result.append(" (").append(args[2].change(varNames));
-			result.append(" (ccount");
-			result.append(" (").append(args[1].change(varNames));
-			result.append(" ").append(args[0].change(varNames));
-			result.append(")");
-			result.append(")");
-			result.append(" ").append(args[3].change(varNames));
-			result.append(")");
-
-		}else if(name.equals("countSuperlative")){
-			result.append(" (").append(args[1].change(varNames));
-			result.append(" ").append(args[0].change(varNames));
-			result.append(" (ccount");
-			result.append(" ").append(args[2].change(varNames));
-			result.append(")");
-			result.append(")");
-		}else{
-			result.append("(").append(pred.getName());
-			for (int i=0; i<args.length; i++){
-				if (args[i]!=null)
-					result.append(" ").append(args[i].change(varNames));
-				else 
-					result.append(" ").append("null");
-			}
-			result.append(")");
-		}
-		return result.toString();
-
-
-
-	}
 
 	public Type inferType(List<Var> vars, List<List<Type>> varTypes){
 
@@ -406,6 +480,30 @@ public class Lit extends Exp {
 
 		//System.out.print("<");
 		//System.out.println("LIT: "+this+" --- type="+rType);
+
+		boolean match = true;
+		if(getHeadString().equals("=") ||
+				getHeadString().equals("!=") ||
+				getHeadString().equals("<") ||
+				getHeadString().equals(">") ||
+				getHeadString().equals("<=") ||
+				getHeadString().equals(">=")){
+
+			for(Exp e: args)
+				if(!e.wellTyped())
+					match= false;
+			if(args.length !=2 ) 
+				match= false;
+			Exp left = args[0], right = args[1];
+
+			Type t1=left.inferType(vars,varTypes);
+			Type t2=right.inferType(vars,varTypes);
+			if (t1==null || t2==null || !t1.matches(t2)){
+				inferedType=null; // update cache
+				return null;
+			}
+			//	rType = left.inferedType.commonSubType(right.inferedType);
+		}
 		inferedType=rType; // update cache
 		return rType;
 	}
@@ -420,7 +518,31 @@ public class Lit extends Exp {
 	}
 
 	public boolean wellTyped(){
-		return type()!=null;
+		if(type()==null)
+			return false;
+		if(getHeadString().equals("=") ||
+				getHeadString().equals("!=") ||
+				getHeadString().equals("<") ||
+				getHeadString().equals(">") ||
+				getHeadString().equals("<=") ||
+				getHeadString().equals(">=")){
+
+			for(Exp e: args)
+				if(!e.wellTyped())
+					return false;
+			if(args.length !=2 ) return false;
+			Exp left = args[0], right = args[1];
+			if (left instanceof Var && !((Var)left).updateTempType(right.type())){
+				return false;
+			}
+			if (right instanceof Var && !((Var)right).updateTempType(left.type())){
+				return false;
+			}
+			if (!left.type().matches(right.type())){
+				return false;
+			}
+		}
+		return true;
 	}
 
 	public void freeVars(List bound, List free){
@@ -677,7 +799,7 @@ public class Lit extends Exp {
 	}
 
 	public String getHeadString(){
-		return pred.getName();
+		return pred.getName().trim();
 	}
 
 	public double avgDepth(int d){
